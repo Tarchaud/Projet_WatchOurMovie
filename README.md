@@ -1,7 +1,8 @@
 # Projet_WatchOurMovie
 
-# Architecture 
-![asset/Untitled_Diagram.drawio.png](asset/Untitled_Diagram.drawio.png)
+## Architecture
+
+![asset/architecture.png](asset/architecture.png)
 
 - API : FastAPI
 - Recommendation engine : Python (probablement un module interne)
