@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  api:
+    build: ./API
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./API:/code
+    restart: always
+
+  front:
+    build: ./Front
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./Front:/app
+    restart: always
