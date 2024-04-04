@@ -4,6 +4,3 @@ python-multipart
 mysql-connector-python
 cachetools
 requests
-python-dotenv
-pyjwt
-passlib
