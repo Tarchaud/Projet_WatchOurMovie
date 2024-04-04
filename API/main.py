@@ -1,11 +1,13 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
+from movie_routes import router as movie_router
 from user_routes import router as user_router
 from user_movies_routes import router as user_movies_router
 from group_routes import router as group_router
 
 app = FastAPI()
 
+app.include_router(movie_router) # Ajout des routes films
 app.include_router(user_router) # Ajout des routes user
 app.include_router(user_movies_router) # Ajout des routes user_movies
 app.include_router(group_router) # Ajout des routes group
