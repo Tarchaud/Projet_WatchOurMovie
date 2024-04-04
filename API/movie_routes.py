@@ -1,29 +1,15 @@
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
 import requests
-from cachetools import cached, TTLCache
-from dotenv import load_dotenv
-import os
+from controllers.call_api_TMDB import fetch_TMDB_movie_details, fetch_TMDB_movie_search, fetch_TMDB_movie_trending, fetch_TMDB_genre_movie, fetch_TMDB_movie_genre
 
 
-cache = TTLCache(maxsize=100, ttl=360)
 
-router = APIRouter()
-
-load_dotenv()
-
-#INFO Récupération des variables d'environnement
-BASE_URL = os.getenv("TMDB_BASE_URL")
-ACCESS_TOKEN = os.getenv("TMDB_ACCESS_TOKEN")
-
-HEADER = {
-    "accept": "application/json",
-    "Authorization" : f"Bearer {ACCESS_TOKEN}"
-}
+router = APIRouter( prefix="/movies", tags=["movies"])
 
 
 # Route pour obtenir le détails d'un film
-@router.get("/movie/{movie_id}/details")
+@router.get("/{movie_id}/details")
 async def get_movie_details(movie_id: int, movie_data: dict):
     """
     Obtention des détails d'un film par ID.
@@ -44,23 +30,9 @@ async def get_movie_details(movie_id: int, movie_data: dict):
     except requests.exceptions.RequestException as e:
             raise HTTPException(status_code=500, detail="Erreur lors de la récupération des détails du film")
 
-def fetch_TMDB_movie_details(movie_id : int, params: dict, cache_key: tuple):
-    """
-    Récupère le details d'un film depuis l'API TMDB.
-    """
 
-    # Tentative de récupération des données depuis le cache
-    data = cache.get(cache_key)
-    if data is None:
-        # Si les données ne sont pas dans le cache, effectuer la requête
-        response = requests.get(f"{BASE_URL}/movie/{movie_id}", params=params, headers=HEADER)
-        response.raise_for_status()
-        data = response.json()
-        # Mise en cache des détails du film pour une utilisation ultérieure
-        cache[cache_key] = data
-    return data
 
-@router.get("/movie/search")
+@router.get("/search")
 async def search_movie_by_title(data_req: dict):
     """
     Rechercher un film par titre.
@@ -69,10 +41,12 @@ async def search_movie_by_title(data_req: dict):
 
     title = data_req.get("title") if data_req.get("title") else ""
     language = data_req.get("language") if data_req.get("language") else "fr-FR"
+    page = data_req.get("page") if data_req.get("page") else 1
 
     params = {
         "query": title,
         "language": language,
+        "page": page,
     }
     
     try:
@@ -83,23 +57,9 @@ async def search_movie_by_title(data_req: dict):
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail="Erreur lors de la recherche du film")
 
-def fetch_TMDB_movie_search( params: dict, cache_key: tuple):
-    """
-    Récupère la liste des films correspondant à la recherche depuis l'API TMDB.
-    """
 
-    # Tentative de récupération des données depuis le cache
-    data = cache.get(cache_key)
-    if data is None:
-        # Si les données ne sont pas dans le cache, effectuer la requête
-        response = requests.get(f"{BASE_URL}/search/movie", params=params, headers=HEADER)
-        response.raise_for_status()
-        data = response.json()
-        # Mise en cache des détails du film pour une utilisation ultérieure
-        cache[cache_key] = data
-    return data
 
-@router.get("/movie/trending")
+@router.get("/trending")
 async def get_trending_movies(movie_data: dict):
     """
     Obtenir une liste de films en tendance.
@@ -126,21 +86,7 @@ async def get_trending_movies(movie_data: dict):
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail="Erreur lors de la récupération des films en tendance")
 
-def fetch_TMDB_movie_trending(time_window :str, params: dict, cache_key: tuple):
-    """
-    Récupère la liste des films en tendance depuis l'API TMDB.
-    """
 
-    # Tentative de récupération des données depuis le cache
-    data = cache.get(cache_key)
-    if data is None:
-        # Si les données ne sont pas dans le cache, effectuer la requête
-        response = requests.get(f"{BASE_URL}/trending/movie/{time_window}", params=params, headers=HEADER)
-        response.raise_for_status()
-        data = response.json()
-        # Mise en cache des détails du film pour une utilisation ultérieure
-        cache[cache_key] = data
-    return data
 
 
 @router.get("/genre/movie")
@@ -151,10 +97,12 @@ async def get_list_genre_movies(movie_data: dict):
     """
 
     language = movie_data.get("language") if movie_data.get("language") else "fr-FR"
+    page = movie_data.get("page") if movie_data.get("page") else 1
 
     # Paramètres de la requête
     params = {
         "language": language,
+        "page": page,
     }
     
     try:
@@ -165,24 +113,12 @@ async def get_list_genre_movies(movie_data: dict):
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail="Erreur lors de la liste des genres de films")
 
-def fetch_TMDB_genre_movie(params: dict, cache_key: tuple):
-    """
-    Récupère la liste des genres de films depuis l'API TMDB.
-    """
 
-    # Tentative de récupération des données depuis le cache
-    data = cache.get(cache_key)
-    if data is None:
-        # Si les données ne sont pas dans le cache, effectuer la requête
-        response = requests.get(f"{BASE_URL}/genre/movie/list", params=params, headers=HEADER)
-        response.raise_for_status()
-        data = response.json()
-        # Mise en cache des détails du film pour une utilisation ultérieure
-        cache[cache_key] = data
-    return data
 
 #INFO Permet de récupérer les films par genre peut être la modif pour l'utiliser avec les autres paramètres qui sont possible pour cette route de l'API TMDB (30 paramètres possibles)
-@router.get("/movie/genre")
+# with_genres = genre_id1,genre_id2,genre_id3 => permet de récupérer les films qui ont un des genres spécifiés
+# with_genres = genre_id1|genre_id2|genre_id3 => permet de récupérer les films qui ont tous les genres spécifiés
+@router.get("/genre")
 async def get_movies_by_genre(movie_data: dict):
     """
     Obtenir une liste de films selon le genre spécifié.
@@ -191,13 +127,14 @@ async def get_movies_by_genre(movie_data: dict):
 
     language = movie_data.get("language") if movie_data.get("language") else "fr-FR"
     with_genres = movie_data.get("genre_id")
+    page = movie_data.get("page") if movie_data.get("page") else 1
 
     params = {
         "language": language,
         "with_genres": with_genres,
         "include_adult": False,
         "include_video": False,
-        "page": 1,
+        "page": page,
         "sort_by" : "popularity.desc"
     }
     
@@ -209,18 +146,3 @@ async def get_movies_by_genre(movie_data: dict):
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail="Erreur lors de la récupération des films par genre")
 
-def fetch_TMDB_movie_genre(params: dict, cache_key: tuple):
-    """
-    Récupère la liste des films par genre depuis l'API TMDB.
-    """
-
-    # Tentative de récupération des données depuis le cache
-    data = cache.get(cache_key)
-    if data is None:
-        # Si les données ne sont pas dans le cache, effectuer la requête
-        response = requests.get(f"{BASE_URL}/discover/movie", params=params, headers=HEADER)
-        response.raise_for_status()
-        data = response.json()
-        # Mise en cache des détails du film pour une utilisation ultérieure
-        cache[cache_key] = data
-    return data
