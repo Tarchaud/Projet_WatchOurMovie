@@ -4,8 +4,11 @@ from typing import List, Optional
 from uuid import UUID, uuid4
 import mysql.connector
 import time
+from movie_routes import router as movie_router
 
 app = FastAPI()
+
+app.include_router(movie_router) # Ajout des routes films
 
 class Film(BaseModel):
     id: UUID = Field(default_factory=uuid4)
