@@ -27,6 +27,9 @@ async def get_movie_details(movie_id: int, movie_data: dict):
         "accept": "application/json",
         "Authorization": f"Bearer {ACCESS_TOKEN}"
     }
-    response = requests.get(f"{base_url}/movie/{movie_id}", params=params, headers=headers)
-    response.raise_for_status()
+    try:
+        response = requests.get(f"{base_url}/movie/{movie_id}", params=params, headers=headers)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+            raise HTTPException(status_code=500, detail="Erreur lors de la récupération des détails du film")
     return response.json()
