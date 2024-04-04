@@ -7,6 +7,10 @@ services:
     volumes:
       - ./API:/code
     restart: always
+    depends_on:
+      - mysql
+    networks:
+      - watchOurMovies
 
   front:
     build: ./Front
@@ -15,3 +19,30 @@ services:
     volumes:
       - ./Front:/app
     restart: always
+    depends_on:
+      - api
+    networks:
+      - watchOurMovies
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password  
+      MYSQL_DATABASE:        
+      MYSQL_USER: your_username           
+      MYSQL_PASSWORD: your_password       
+    ports:
+      - "3306:3306" 
+    volumes:
+      - mysql_data_watchOurMovies:/var/lib/mysql
+    networks:
+      - watchOurMovies
+
+volumes:
+  mysql_data_watchOurMovies:
+
+networks:
+  watchOurMovies:
+    driver: bridge
