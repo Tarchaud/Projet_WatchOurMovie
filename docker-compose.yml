@@ -30,7 +30,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root_password  
-      MYSQL_DATABASE:        
+      MYSQL_DATABASE: watchOurMoviesDB
       MYSQL_USER: your_username           
       MYSQL_PASSWORD: your_password       
     ports:
