@@ -1,11 +1,9 @@
-# Étape de build
-FROM node:18 as build
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+FROM node:20.9.0-alpine
 
-# Étape de run
-FROM nginx:alpine
-COPY --from=build /app/dist/* /usr/share/nginx/html/
+WORKDIR /app
+
+# COPY . .
+
+# RUN npm install
+
+CMD ["npm", "run", "start_docker"]
