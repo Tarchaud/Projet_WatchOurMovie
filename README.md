@@ -13,3 +13,5 @@
 - DB : MySQL/MariaDB
 
 on part sur `Recommendation engine` et `User Manager` en tant que module interne de l'api et le systeme de caching de requête aussi avec le module `cachetools`
+
+
