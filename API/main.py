@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from typing import List, Optional
 from uuid import UUID, uuid4
@@ -9,6 +10,15 @@ from movie_routes import router as movie_router
 app = FastAPI()
 
 app.include_router(movie_router) # Ajout des routes films
+
+# Gestion des erreurs
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request, exc):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"message": exc.detail}
+    )
+
 
 class Film(BaseModel):
     id: UUID = Field(default_factory=uuid4)
