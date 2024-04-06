@@ -12,6 +12,8 @@ router = APIRouter()
 
 load_dotenv()
 
+load_dotenv()
+
 #INFO Récupération des variables d'environnement
 BASE_URL = os.getenv("TMDB_BASE_URL")
 ACCESS_TOKEN = os.getenv("TMDB_ACCESS_TOKEN")
