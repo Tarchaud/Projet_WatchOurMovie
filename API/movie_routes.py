@@ -128,6 +128,41 @@ async def get_trending_movies(movie_data: dict):
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail="Erreur lors de la récupération des films en tendance")
 
+@router.get("/movie/list_genre")
+async def get_list_genre_movies(movie_data: dict):
+    """
+    Obtenir une liste des genres de film.
+    Renvoie la liste des genre de film.
+    """
+
+    language = movie_data.get("language") if movie_data.get("language") else "fr-FR"
+
+    # Paramètres de la requête
+    params = {
+        "language": language,
+    }
+    
+    headers = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {ACCESS_TOKEN}"
+    }
+
+    try:
+        # Récupérer les films en tendance depuis le cache
+        cache_key = ("Movie_List_Genre", language)
+        response = cache.get(cache_key)
+        if response is None:
+            # Effectuer la requête à l'API TMDB
+            response = requests.get(f"{BASE_URL}/genre/movie/list", params=params, headers=headers)
+            response.raise_for_status()
+            response = response.json()
+            # Mise en cache des films en tendance pour une utilisation ultérieure
+            cache[cache_key] = response
+
+        return response
+    except requests.exceptions.RequestException as e:
+        raise HTTPException(status_code=500, detail="Erreur lors de la liste des genres de films")
+
 #INFO Permet de récupérer les films par genre peut être la modif pour l'utiliser avec les autres paramètres qui sont possible pour cette route de l'API TMDB (30 paramètres possibles)
 @router.get("/movie/genre")
 async def get_movies_by_genre(movie_data: dict):
