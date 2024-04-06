@@ -12,10 +12,8 @@ router = APIRouter()
 
 load_dotenv()
 
-# URL de base de l'API TMDB
+#INFO Récupération des variables d'environnement
 BASE_URL = os.getenv("TMDB_BASE_URL")
-
-# Clé d'API TMDB (remplacez-la par votre propre clé)
 ACCESS_TOKEN = os.getenv("TMDB_ACCESS_TOKEN")
 
 
@@ -130,7 +128,7 @@ async def get_trending_movies(movie_data: dict):
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail="Erreur lors de la récupération des films en tendance")
 
-
+#INFO Permet de récupérer les films par genre peut être la modif pour l'utiliser avec les autres paramètres qui sont possible pour cette route de l'API TMDB (30 paramètres possibles)
 @router.get("/movie/genre")
 async def get_movies_by_genre(movie_data: dict):
     """
