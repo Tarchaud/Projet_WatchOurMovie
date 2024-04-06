@@ -2,16 +2,21 @@ from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
 import requests
 from cachetools import cached, TTLCache
+from dotenv import load_dotenv
+import os
+
 
 cache = TTLCache(maxsize=100, ttl=360)
 
 router = APIRouter()
 
+load_dotenv()
+
 # URL de base de l'API TMDB
-base_url = "https://api.themoviedb.org/3"
+BASE_URL = os.getenv("TMDB_BASE_URL")
 
 # Clé d'API TMDB (remplacez-la par votre propre clé)
-ACCESS_TOKEN = "access_token_here"
+ACCESS_TOKEN = os.getenv("TMDB_ACCESS_TOKEN")
 
 
 # Route pour obtenir le détails d'un film
@@ -33,20 +38,19 @@ async def get_movie_details(movie_id: int, movie_data: dict):
     }
     try:
         # Récupérer les détails du film depuis le cache
-        response = cache.get((movie_id, language))
-        from_cache = True
+        response = cache.get(("details",movie_id, language))
         if response is None:
 
-            response = requests.get(f"{base_url}/movie/{movie_id}", params=params, headers=headers)
+            response = requests.get(f"{BASE_URL}/movie/{movie_id}", params=params, headers=headers)
             response.raise_for_status()
             response = response.json()
 
             # Mise en cache des détails du film pour une utilisation ultérieure
-            cache[(movie_id, language)] = response
+            cache[("details",movie_id, language)] = response
     
         return response
     except requests.exceptions.RequestException as e:
-            raise HTTPException(status_code=500, detail="Erreur lors de la récupération des détails du film")
+            raise HTTPException(status_code=500, detail=f"{BASE_URL}")
 
 
 @router.get("/movie/search")
@@ -75,7 +79,7 @@ async def search_movie_by_title(data_req: dict):
         response = cache.get(cache_key)
         if response is None:
 
-            response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, headers=headers)
+            response = requests.get(f"{BASE_URL}/search/movie", params=params, headers=headers)
             response.raise_for_status()
             response = response.json()
             # Mise en cache des données pour une utilisation ultérieure
@@ -111,7 +115,7 @@ async def get_trending_movies(movie_data: dict):
         response = cache.get(("trending", language, time_window))
         if response is None:
             # Effectuer la requête à l'API TMDB
-            response = requests.get("https://api.themoviedb.org/3/trending/movie/day", params=params, headers=headers)
+            response = requests.get(f"{BASE_URL}/trending/movie/day", params=params, headers=headers)
             response.raise_for_status()
             response = response.json()
             # Mise en cache des films en tendance pour une utilisation ultérieure
