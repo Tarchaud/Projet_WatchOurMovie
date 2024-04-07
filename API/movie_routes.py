@@ -128,7 +128,7 @@ async def get_trending_movies(movie_data: dict):
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail="Erreur lors de la récupération des films en tendance")
 
-@router.get("/movie/list_genre")
+@router.get("/genre/movie")
 async def get_list_genre_movies(movie_data: dict):
     """
     Obtenir une liste des genres de film.
