@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS Groupe (
 CREATE TABLE IF NOT EXISTS User_film (
     id VARCHAR(36) PRIMARY KEY,
     user_id VARCHAR(36),
-    film_id VARCHAR(36),
+    film_id INT,
     FOREIGN KEY (user_id) REFERENCES User(id),
     FOREIGN KEY (film_id) REFERENCES films(id) --ici on fait référence aux films de tmdb
 );
