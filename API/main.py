@@ -7,11 +7,20 @@ import time
 
 app = FastAPI()
 
-class Film(BaseModel):
+class User(BaseModel):
     id: UUID = Field(default_factory=uuid4)
-    title: str
-    year: int
-    description: Optional[str] = None
+    username: str
+    email: str
+
+class Group(BaseModel):
+    id: UUID = Field(default_factory=uuid4)
+    name: str
+    user_ids: List[UUID]
+
+class UserFilm(BaseModel):
+    id: UUID = Field(default_factory=uuid4)
+    user_id: UUID
+    film_id: UUID
 
 # Connexion à la base de données MySQL
 def connect_to_database():
@@ -35,48 +44,74 @@ db_connection = connect_to_database()
 def shutdown_event():
     db_connection.close()
 
-# Endpoint pour récupérer tous les films depuis la base de données
-@app.get("/films/", response_model=List[Film])
-def read_films():
+# Endpoint pour récupérer tous les utilisateurs depuis la base de données
+@app.get("/users/", response_model=List[User])
+def read_users():
     cursor = db_connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM films")
-    films = cursor.fetchall()
+    cursor.execute("SELECT * FROM User")
+    users = cursor.fetchall()
     cursor.close()
-    return films
+    return users
 
-# Endpoint pour ajouter un nouveau film à la base de données
-@app.post("/films/", response_model=Film)
-def add_film(film: Film):
+# Endpoint pour ajouter un nouvel utilisateur à la base de données
+@app.post("/users/", response_model=User)
+def add_user(user: User):
     cursor = db_connection.cursor()
-    cursor.execute("INSERT INTO films (id, title, year, description) VALUES (%s, %s, %s, %s)", 
-                   (str(film.id), film.title, film.year, film.description))
+    cursor.execute("INSERT INTO User (id, username, email) VALUES (%s, %s, %s)", 
+                   (str(user.id), user.username, user.email))
     db_connection.commit()
     cursor.close()
-    return film
+    return user
 
-# Endpoint pour récupérer un film spécifique par ID depuis la base de données
-@app.get("/films/{film_id}", response_model=Film)
-def read_film(film_id: UUID):
+# Endpoint pour récupérer tous les groupes depuis la base de données
+@app.get("/groups/", response_model=List[Group])
+def read_groups():
     cursor = db_connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM films WHERE id = %s", (film_id,))
-    film = cursor.fetchone()
+    cursor.execute("SELECT * FROM Groupe")
+    groups = cursor.fetchall()
     cursor.close()
-    if film:
-        return film
-    else:
-        raise HTTPException(status_code=404, detail="Film not found")
+    return groups
 
-# Endpoint pour supprimer un film de la base de données
-@app.delete("/films/{film_id}", response_model=Film)
-def delete_film(film_id: UUID):
+# Endpoint pour ajouter un nouveau groupe à la base de données
+@app.post("/groups/", response_model=Group)
+def add_group(group: Group):
+    cursor = db_connection.cursor()
+    cursor.execute("INSERT INTO Groupe (id, name) VALUES (%s, %s)", 
+                   (str(group.id), group.name))
+    db_connection.commit()
+    cursor.close()
+    return group
+
+# Endpoint pour récupérer tous les films qu'un utilisateur aime
+@app.get("/users/{user_id}/films/", response_model=List[UserFilm])
+def read_user_films(user_id: UUID):
     cursor = db_connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM films WHERE id = %s", (film_id,))
-    film = cursor.fetchone()
-    if film:
-        cursor.execute("DELETE FROM films WHERE id = %s", (film_id,))
+    cursor.execute("SELECT * FROM User_film WHERE user_id = %s", (user_id,))
+    user_films = cursor.fetchall()
+    cursor.close()
+    return user_films
+
+# Endpoint pour ajouter un film que l'utilisateur aime
+@app.post("/users/{user_id}/films/", response_model=UserFilm)
+def add_user_film(user_id: UUID, film_id: UUID):
+    cursor = db_connection.cursor()
+    cursor.execute("INSERT INTO User_film (id, user_id, film_id) VALUES (%s, %s, %s)", 
+                   (str(uuid4()), user_id, film_id))
+    db_connection.commit()
+    cursor.close()
+    return {"user_id": user_id, "film_id": film_id}
+
+# Endpoint pour supprimer un film que l'utilisateur aime
+@app.delete("/users/{user_id}/films/{film_id}", response_model=UserFilm)
+def delete_user_film(user_id: UUID, film_id: UUID):
+    cursor = db_connection.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM User_film WHERE user_id = %s AND film_id = %s", (user_id, film_id))
+    user_film = cursor.fetchone()
+    if user_film:
+        cursor.execute("DELETE FROM User_film WHERE user_id = %s AND film_id = %s", (user_id, film_id))
         db_connection.commit()
         cursor.close()
-        return film
+        return user_film
     else:
         cursor.close()
-        raise HTTPException(status_code=404, detail="Film not found")
+        raise HTTPException(status_code=404, detail="User film not found")
