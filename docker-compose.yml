@@ -8,7 +8,8 @@ services:
       - ./API:/code
     restart: always
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       - watchOurMovies
 
@@ -40,6 +41,11 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - watchOurMovies
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
 
 volumes:
   mysql_data_watchOurMovies:
