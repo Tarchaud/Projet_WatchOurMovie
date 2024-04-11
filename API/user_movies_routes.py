@@ -4,13 +4,19 @@ from typing import List, Optional
 from uuid import UUID, uuid4
 import mysql.connector
 import time
+from calculer_recommandations import RecommandationSystem
 
 router = APIRouter()
 
 class UserFilm(BaseModel):
     id: UUID = Field(default_factory=uuid4)
-    user_id: UUID
+    user_id: str
     film_id: int
+    
+class RecommandationFilms(BaseModel):
+    id: UUID = Field(default_factory=uuid4)
+    user_id: str
+    film_ids: List[int]
 
 # Connexion à la base de données MySQL
 def connect_to_database():
@@ -74,5 +80,17 @@ def delete_user_film(user_id: UUID, film_id: int):
         else:
             cursor.close()
             raise HTTPException(status_code=404, detail="User film not found")
+    except mysql.connector.Error as err:
+        raise HTTPException(status_code=500, detail=f"Database error: {err}")
+
+# Endpoint pour récupérer des recommendations pour l'utilisateur
+@router.get("/users/{user_id}/recommendations/", response_model=RecommandationFilms)
+def get_recommendations(user_id: UUID):
+    try:
+        film_ids_recommandes = calculer_recommandations(user_id, db_connection)
+        if film_ids_recommandes:
+            return {"user_id": user_id, "film_ids": film_ids_recommandes}
+        else:
+            raise HTTPException(status_code=404, detail="No recommendations available.")
     except mysql.connector.Error as err:
         raise HTTPException(status_code=500, detail=f"Database error: {err}")
