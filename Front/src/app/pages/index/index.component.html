@@ -1,0 +1,13 @@
+<!-- film-gallery.component.html -->
+<div class="film-gallery">
+    <h1>{{ categoryName }}</h1>
+    <div class="films">
+        <div class="film" *ngFor="let film of films" (mouseover)="hoverEffectOn(film)" (mouseout)="hoverEffectOff(film)">
+            <img [src]="film.image" [alt]="film.title">
+            <div class="film-info" *ngIf="film.isHovered">
+                <h3>{{ film.title }}</h3>
+                <p>{{ film.year }}</p>
+            </div>
+        </div>
+    </div>
+</div>
