@@ -3,24 +3,26 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthenticationComponent } from './components/authentication/authentication.component';
-import { SearchMoviesComponent } from './components/search-movies/search-movies.component';
-import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
-import { ManageGroupsComponent } from './components/manage-groups/manage-groups.component';
-import { UserPreferencesComponent } from './components/user-preferences/user-preferences.component';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { IndexComponent } from './pages/index/index.component';
+import { HeaderComponent } from './pages/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthenticationComponent,
-    SearchMoviesComponent,
-    MovieDetailsComponent,
-    ManageGroupsComponent,
-    UserPreferencesComponent
+    IndexComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
