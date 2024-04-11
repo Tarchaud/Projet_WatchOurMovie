@@ -10,17 +10,12 @@ router = APIRouter()
 
 class UserFilm(BaseModel):
     id: UUID = Field(default_factory=uuid4)
-    user_id: str
-    film_id: int
+    user_id: UUID
+    film_tmdb_id: int
     
 class RecommandationFilms(BaseModel):
     id: UUID = Field(default_factory=uuid4)
-    user_id: str
-    film_ids: List[int]
-
-class RecommandationFilms(BaseModel):
-    id: UUID = Field(default_factory=uuid4)
-    user_id: str
+    user_id: UUID
     film_ids: List[int]
 
 # Connexion à la base de données MySQL

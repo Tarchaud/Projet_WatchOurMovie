@@ -14,6 +14,9 @@ class RecommandationSystem:
             print(f"Database error: {err}")
             return None
 
+    """
+        Récupérer les films les plus populaires.
+    """
     def get_most_popular_films(self, db_connection):
         try:
             cursor = db_connection.cursor(dictionary=True)
@@ -25,6 +28,9 @@ class RecommandationSystem:
             print(f"Database error: {err}")
             return []
 
+    """
+        Récupérer les films que l'utilisateur a déjà vu.
+    """
     def read_user_films(self, user_id: UUID, db_connection):
         try:
             cursor = db_connection.cursor(dictionary=True)
@@ -36,6 +42,10 @@ class RecommandationSystem:
             print(f"Database error: {err}")
             return []
 
+    """
+        Calculer les recommandations pour un utilisateur.
+        Renvoie une liste de films recommandés (au maximum 5).
+    """
     def calculer_recommandations(self, user_id: UUID, max_recommandations=5):
         db_connection = self.connect_to_database()
         if not db_connection:
