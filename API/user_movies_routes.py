@@ -18,6 +18,11 @@ class RecommandationFilms(BaseModel):
     user_id: str
     film_ids: List[int]
 
+class RecommandationFilms(BaseModel):
+    id: UUID = Field(default_factory=uuid4)
+    user_id: str
+    film_ids: List[int]
+
 # Connexion à la base de données MySQL
 def connect_to_database():
     try:
