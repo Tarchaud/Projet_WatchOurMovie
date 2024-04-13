@@ -22,10 +22,12 @@ CREATE TABLE IF NOT EXISTS Group_User (
     FOREIGN KEY (user_id) REFERENCES User(id)
 );
 
--- Création de la table User_film
+-- Création de la table User_film, films que l'utilisateur a aimé / vus
 CREATE TABLE IF NOT EXISTS User_film (
     id VARCHAR(36) PRIMARY KEY,
     user_id VARCHAR(36),
     film_tmdb_id INT, -- Colonne pour stocker les identifiants TMDB des films
+    liked BOOLEAN DEFAULT FALSE,
+    seen BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id) REFERENCES User(id)
 );
