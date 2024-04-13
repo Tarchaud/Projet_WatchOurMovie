@@ -8,7 +8,7 @@ import os
 
 cache = TTLCache(maxsize=100, ttl=360)
 
-router = APIRouter()
+router = APIRouter( prefix="/movies", tags=["movies"])
 
 load_dotenv()
 
@@ -23,7 +23,7 @@ HEADER = {
 
 
 # Route pour obtenir le détails d'un film
-@router.get("/movie/{movie_id}/details")
+@router.get("/{movie_id}/details")
 async def get_movie_details(movie_id: int, movie_data: dict):
     """
     Obtention des détails d'un film par ID.
@@ -60,7 +60,7 @@ def fetch_TMDB_movie_details(movie_id : int, params: dict, cache_key: tuple):
         cache[cache_key] = data
     return data
 
-@router.get("/movie/search")
+@router.get("/search")
 async def search_movie_by_title(data_req: dict):
     """
     Rechercher un film par titre.
@@ -99,7 +99,7 @@ def fetch_TMDB_movie_search( params: dict, cache_key: tuple):
         cache[cache_key] = data
     return data
 
-@router.get("/movie/trending")
+@router.get("/trending")
 async def get_trending_movies(movie_data: dict):
     """
     Obtenir une liste de films en tendance.
@@ -182,7 +182,7 @@ def fetch_TMDB_genre_movie(params: dict, cache_key: tuple):
     return data
 
 #INFO Permet de récupérer les films par genre peut être la modif pour l'utiliser avec les autres paramètres qui sont possible pour cette route de l'API TMDB (30 paramètres possibles)
-@router.get("/movie/genre")
+@router.get("/genre")
 async def get_movies_by_genre(movie_data: dict):
     """
     Obtenir une liste de films selon le genre spécifié.
