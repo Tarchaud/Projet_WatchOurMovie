@@ -4,7 +4,7 @@ from typing import List, Optional
 from uuid import UUID, uuid4
 import mysql.connector
 
-router = APIRouter()
+router = APIRouter( prefix="/groups", tags=["groups"])
 
 class Group(BaseModel):
     id: UUID = Field(default_factory=uuid4)
@@ -28,7 +28,7 @@ def connect_to_database():
 db_connection = connect_to_database()
 
 # Endpoint pour récupérer tous les groupes depuis la base de données
-@router.get("/groups/", response_model=List[Group])
+@router.get("/", response_model=List[Group])
 def read_groups():
     try:
         if not db_connection.is_connected():
@@ -49,7 +49,7 @@ def read_groups():
         raise HTTPException(status_code=500, detail=f"Database error: {err}")
 
 # Endpoint pour ajouter un nouveau groupe à la base de données
-@router.post("/groups/", response_model=Group)
+@router.post("/", response_model=Group)
 def add_group(group: Group):
     try:
         if not db_connection.is_connected():
