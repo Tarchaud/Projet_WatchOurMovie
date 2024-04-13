@@ -46,7 +46,7 @@ def connect_to_database():
 
 # Endpoint pour récupérer tous les utilisateurs depuis la base de données
 @router.get("/", response_model=List[UserRes])
-def read_users():
+def get_all_users():
     users = getAllUsers()
     return users
     

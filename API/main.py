@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from routes.movies_routes import router as movie_router
 from routes.users_routes import router as user_router
 from user_movies_routes import router as user_movies_router
-from group_routes import router as group_router
+from routes.groups_routes import router as group_router
 from identity_provider.auth import auth_router
 
 app = FastAPI()

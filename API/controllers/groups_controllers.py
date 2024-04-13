@@ -1,10 +1,20 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import HTTPException
 from pydantic import BaseModel, Field
-from typing import List, Optional
 from uuid import UUID, uuid4
+from typing import List, Optional
 import mysql.connector
+import time
 
-router = APIRouter( prefix="/groups", tags=["groups"])
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+DB_HOST = os.getenv("DB_HOST")
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_DATABASE = os.getenv("DB_DATABASE")
+
 
 class Group(BaseModel):
     id: UUID = Field(default_factory=uuid4)
@@ -15,10 +25,10 @@ class Group(BaseModel):
 def connect_to_database():
     try:
         db_connection = mysql.connector.connect(
-            host="mysql",
-            user="your_username",
-            password="your_password",
-            database="watchOurMoviesDB"
+            host = DB_HOST,
+            user = DB_USER,
+            password = DB_PASSWORD,
+            database = DB_DATABASE
         )
         return db_connection
     except mysql.connector.Error as err:
@@ -27,9 +37,8 @@ def connect_to_database():
 
 db_connection = connect_to_database()
 
-# Endpoint pour récupérer tous les groupes depuis la base de données
-@router.get("/", response_model=List[Group])
-def read_groups():
+
+def getAllGroups():
     try:
         if not db_connection.is_connected():
             db_connection.reconnect()
@@ -47,10 +56,9 @@ def read_groups():
         return groups
     except mysql.connector.Error as err:
         raise HTTPException(status_code=500, detail=f"Database error: {err}")
+    
 
-# Endpoint pour ajouter un nouveau groupe à la base de données
-@router.post("/", response_model=Group)
-def add_group(group: Group):
+def createGroup(group : Group):
     try:
         if not db_connection.is_connected():
             db_connection.reconnect()
