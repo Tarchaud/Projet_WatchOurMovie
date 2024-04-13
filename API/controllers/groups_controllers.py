@@ -83,3 +83,77 @@ def createGroup(group : Group):
         return group
     except mysql.connector.Error as err:
         raise HTTPException(status_code=500, detail=f"Database error: {err}")
+    
+def getGroupById(group_id):
+    try:
+        if not db_connection.is_connected():
+            db_connection.reconnect()
+        cursor = db_connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM Groupe WHERE id = %s", (str(group_id),))
+        group = cursor.fetchone()
+        
+        if group is None:
+            raise HTTPException(status_code=404, detail="Group not found")
+        
+        cursor.execute("SELECT user_id FROM Group_User WHERE group_id = %s", (group_id,))
+        user_ids = [user_id["user_id"] for user_id in cursor.fetchall()]
+        group["user_ids"] = user_ids
+        
+        cursor.close()
+        return group
+    except mysql.connector.Error as err:
+        raise HTTPException(status_code=500, detail=f"Database error: {err}")
+    
+def getAllGroupsOfUser(user_id):
+    try:
+        if not db_connection.is_connected():
+            db_connection.reconnect()
+        cursor = db_connection.cursor(dictionary=True)
+        cursor.execute("SELECT group_id FROM Group_User WHERE user_id = %s", (str(user_id),))
+        group_ids = [group_id["group_id"] for group_id in cursor.fetchall()]
+        
+        groups = []
+        for group_id in group_ids:
+            cursor.execute("SELECT * FROM Groupe WHERE id = %s", (group_id,))
+            group = cursor.fetchone()
+            cursor.execute("SELECT user_id FROM Group_User WHERE group_id = %s", (group_id,))
+            user_ids = [user_id["user_id"] for user_id in cursor.fetchall()]
+            group["user_ids"] = user_ids
+            groups.append(group)
+        
+        cursor.close()
+        return groups
+    except mysql.connector.Error as err:
+        raise HTTPException(status_code=500, detail=f"Database error: {err}")
+
+
+def removeUserFromGroup(group_id: UUID, user_id: UUID):
+    try:
+        if not db_connection.is_connected():
+            db_connection.reconnect()
+        cursor = db_connection.cursor()
+
+        cursor.execute("DELETE FROM Group_User WHERE group_id = %s AND user_id = %s", 
+                       (str(group_id), str(user_id)))
+
+        db_connection.commit()
+        cursor.close()
+        return {"message": "User removed from group"}
+    except mysql.connector.Error as err:
+        raise HTTPException(status_code=500, detail=f"Database error: {err}")
+    
+
+def addUserToGroup(group_id: UUID, user_id: UUID):
+    try:
+        if not db_connection.is_connected():
+            db_connection.reconnect()
+        cursor = db_connection.cursor()
+
+        cursor.execute("INSERT INTO Group_User (group_id, user_id) VALUES (%s, %s)", 
+                       (str(group_id), str(user_id)))
+
+        db_connection.commit()
+        cursor.close()
+        return {"message": "User added to group"}
+    except mysql.connector.Error as err:
+        raise HTTPException(status_code=500, detail=f"Database error: {err}")

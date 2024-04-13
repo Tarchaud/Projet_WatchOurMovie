@@ -2,8 +2,9 @@ USE watchOurMoviesDB;
 
 -- Création de la table User
 CREATE TABLE IF NOT EXISTS User (
-    id VARCHAR(36) PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
+    id VARCHAR(36),
+    username VARCHAR(255) NOT NULL ,
+    PRIMARY KEY (id, username),
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL
 );
