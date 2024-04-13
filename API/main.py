@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
-from movie_routes import router as movie_router
+from routes.movies_routes import router as movie_router
 from user_routes import router as user_router
 from user_movies_routes import router as user_movies_router
 from group_routes import router as group_router
