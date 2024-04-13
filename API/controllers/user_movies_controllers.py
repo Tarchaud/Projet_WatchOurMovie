@@ -77,15 +77,33 @@ def addMovieToUser(user_id: UUID, film: UserFilm):
     except mysql.connector.Error as err:
         raise HTTPException(status_code=500, detail=f"Database error: {err}")
     
-def deleteMovieFromUser(user_id: UUID, film_tmdb_id: int):
+def deleteLikedMovieFromUser(user_id: UUID, film_tmdb_id: int):
     try:
         if not db_connection.is_connected():
             db_connection.reconnect()
         cursor = db_connection.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM User_film WHERE user_id = %s AND film_tmdb_id = %s", (str(user_id), film_tmdb_id))
+        cursor.execute("SELECT * FROM User_film WHERE user_id = %s AND film_tmdb_id = %s AND liked = TRUE", (str(user_id), film_tmdb_id))
         user_film = cursor.fetchone()
         if user_film:
-            cursor.execute("DELETE FROM User_film WHERE user_id = %s AND film_tmdb_id = %s", (str(user_id), film_tmdb_id)) 
+            cursor.execute("UPDATE User_film SET liked = FALSE WHERE user_id = %s AND film_tmdb_id = %s", (str(user_id), film_tmdb_id)) 
+            db_connection.commit()
+            cursor.close()
+            return user_film
+        else:
+            cursor.close()
+            raise HTTPException(status_code=404, detail="User film not found")
+    except mysql.connector.Error as err:
+        raise HTTPException(status_code=500, detail=f"Database error: {err}")
+
+def deleteSeenMovieFromUser(user_id: UUID, film_tmdb_id: int):
+    try:
+        if not db_connection.is_connected():
+            db_connection.reconnect()
+        cursor = db_connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM User_film WHERE user_id = %s AND film_tmdb_id = %s AND seen = TRUE", (str(user_id), film_tmdb_id))
+        user_film = cursor.fetchone()
+        if user_film:
+            cursor.execute("UPDATE User_film SET seen = FALSE WHERE user_id = %s AND film_tmdb_id = %s", (str(user_id), film_tmdb_id)) 
             db_connection.commit()
             cursor.close()
             return user_film
