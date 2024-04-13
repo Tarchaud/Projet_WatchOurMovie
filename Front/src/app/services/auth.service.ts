@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<any>(`/auth/login`, { username, password })
+    return this.http.post<any>(`http://localhost:8000/auth/login`, { username, password })
       .pipe(map(response => {
         localStorage.setItem('currentUser', JSON.stringify(response.user));
         localStorage.setItem('token', response.access_token);

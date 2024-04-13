@@ -32,3 +32,6 @@ CREATE TABLE IF NOT EXISTS User_film (
     seen BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id) REFERENCES User(id)
 );
+
+
+INSERT INTO User (id, username, password, email) VALUES ("34684a18-5bcf-40be-8343-ba0cb6c5af93", "test","$2b$12$Z6QKaVgWxGVibFDPuEBh9.p2gSRqbZQMlu4uuv/NZA5DG4exmMtEG", "test@test.fr");
