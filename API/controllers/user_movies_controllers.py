@@ -1,11 +1,19 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import HTTPException
 from pydantic import BaseModel, Field
-from typing import List, Optional
 from uuid import UUID, uuid4
+from typing import List, Optional
 import mysql.connector
 import time
 
-router = APIRouter()
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+DB_HOST = os.getenv("DB_HOST")
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_DATABASE = os.getenv("DB_DATABASE")
 
 class UserFilm(BaseModel):
     id: UUID = Field(default_factory=uuid4)
@@ -18,10 +26,10 @@ class UserFilm(BaseModel):
 def connect_to_database():
     try:
         db_connection = mysql.connector.connect(
-            host="mysql",
-            user="your_username",
-            password="your_password",
-            database="watchOurMoviesDB"
+            host = DB_HOST,
+            user = DB_USER,
+            password = DB_PASSWORD,
+            database = DB_DATABASE
         )
         return db_connection
     except mysql.connector.Error as err:
@@ -30,9 +38,8 @@ def connect_to_database():
 
 db_connection = connect_to_database()
 
-# Endpoint pour récupérer les films aimés par un utilisateur
-@router.get("/users/{user_id}/liked_films/", response_model=List[UserFilm])
-def read_user_liked_films(user_id: UUID):
+
+def getAllMoviesLikedByUser(user_id: UUID):
     try:
         if not db_connection.is_connected():
             db_connection.reconnect()
@@ -44,9 +51,7 @@ def read_user_liked_films(user_id: UUID):
     except mysql.connector.Error as err:
         raise HTTPException(status_code=500, detail=f"Database error: {err}")
 
-# Endpoint pour récupérer les films déjà vus par un utilisateur
-@router.get("/users/{user_id}/seen_films/", response_model=List[UserFilm])
-def read_user_seen_films(user_id: UUID):
+def getAllMoviesSeenByUser(user_id: UUID):
     try:
         if not db_connection.is_connected():
             db_connection.reconnect()
@@ -57,10 +62,9 @@ def read_user_seen_films(user_id: UUID):
         return user_seen_films
     except mysql.connector.Error as err:
         raise HTTPException(status_code=500, detail=f"Database error: {err}")
+    
 
-# Endpoint pour ajouter un film aimé ou déjà vu par un utilisateur
-@router.post("/users/{user_id}/films/", response_model=UserFilm)
-def add_user_film(user_id: UUID, film: UserFilm):  
+def addMovieToUser(user_id: UUID, film: UserFilm):
     try:
         if not db_connection.is_connected():
             db_connection.reconnect()
@@ -72,10 +76,8 @@ def add_user_film(user_id: UUID, film: UserFilm):
         return film
     except mysql.connector.Error as err:
         raise HTTPException(status_code=500, detail=f"Database error: {err}")
-
-# Endpoint pour supprimer un film aimé ou déjà vu par un utilisateur
-@router.delete("/users/{user_id}/films/{film_tmdb_id}", response_model=UserFilm)
-def delete_user_film(user_id: UUID, film_tmdb_id: int):
+    
+def deleteMovieFromUser(user_id: UUID, film_tmdb_id: int):
     try:
         if not db_connection.is_connected():
             db_connection.reconnect()
