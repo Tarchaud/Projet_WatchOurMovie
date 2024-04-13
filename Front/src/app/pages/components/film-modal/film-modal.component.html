@@ -1,0 +1,12 @@
+<!-- film-modal.component.html -->
+<div class="modal">
+    <div class="modal-content">
+        <span class="close" (click)="close.emit()">&times;</span>
+        <h2>{{ film.title }}</h2>
+        <div class="modal-body">
+            <img [src]="film.image" alt="Image du film">
+            <p>{{ film.description }}</p>
+        </div>
+        <button (click)="like.emit()" class="like-button">{{ film.isLiked ? 'Unlike' : 'Like' }}</button>
+    </div>
+</div>
