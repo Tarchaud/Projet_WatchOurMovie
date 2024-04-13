@@ -116,6 +116,8 @@ async def get_list_genre_movies(movie_data: dict):
 
 
 #INFO Permet de récupérer les films par genre peut être la modif pour l'utiliser avec les autres paramètres qui sont possible pour cette route de l'API TMDB (30 paramètres possibles)
+# with_genres = genre_id1,genre_id2,genre_id3 => permet de récupérer les films qui ont un des genres spécifiés
+# with_genres = genre_id1|genre_id2|genre_id3 => permet de récupérer les films qui ont tous les genres spécifiés
 @router.get("/genre")
 async def get_movies_by_genre(movie_data: dict):
     """
