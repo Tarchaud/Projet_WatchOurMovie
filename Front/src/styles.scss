@@ -1,7 +1,33 @@
+// Custom Theming for Angular Material
+@use '@angular/material' as mat;
+@include mat.core();
+
+// Define the palettes with custom colors for your theme
+$custom-primary: mat.define-palette(mat.$red-palette, 700);  // Red as primary color
+$custom-accent: mat.define-palette(mat.$grey-palette, A200); // Grey as accent color, you can change this to another shade of red if needed
+
+// The warn palette usually defaults to red, adjust if needed
+$custom-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object with your custom colors
+$custom-theme: mat.define-light-theme((
+  color: (
+    primary: $custom-primary,
+    accent: $custom-accent,
+    warn: $custom-warn,
+  )
+));
+
+// Include Angular Material component themes
+@include mat.all-component-themes($custom-theme);
+
+// Additional global styling
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #000000, #333333); /* Dégradé du noir en haut au gris en bas */
+    background: linear-gradient(to bottom, #000000, #333333); // Gradient from black at top to grey at bottom
     color: white;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
