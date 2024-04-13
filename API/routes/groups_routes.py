@@ -3,7 +3,8 @@ from pydantic import BaseModel, Field
 from typing import List, Optional
 from uuid import UUID, uuid4
 import mysql.connector
-import time
+
+from controllers.groups_controllers import getAllGroups, createGroup
 
 router = APIRouter( prefix="/groups", tags=["groups"])
 
@@ -30,29 +31,12 @@ db_connection = connect_to_database()
 
 # Endpoint pour récupérer tous les groupes depuis la base de données
 @router.get("/", response_model=List[Group])
-def read_groups():
-    try:
-        if not db_connection.is_connected():
-            db_connection.reconnect()
-        cursor = db_connection.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM Groupe")
-        groups = cursor.fetchall()
-        cursor.close()
-        return groups
-    except mysql.connector.Error as err:
-        raise HTTPException(status_code=500, detail=f"Database error: {err}")
+def get_all_groups():
+    groups = getAllGroups()
+    return groups
 
 # Endpoint pour ajouter un nouveau groupe à la base de données
 @router.post("/", response_model=Group)
 def add_group(group: Group):
-    try:
-        if not db_connection.is_connected():
-            db_connection.reconnect()
-        cursor = db_connection.cursor()
-        cursor.execute("INSERT INTO Groupe (id, name) VALUES (%s, %s)", 
-                       (str(group.id), group.name))
-        db_connection.commit()
-        cursor.close()
-        return group
-    except mysql.connector.Error as err:
-        raise HTTPException(status_code=500, detail=f"Database error: {err}")
+    group_res = createGroup(group)
+    return group_res
