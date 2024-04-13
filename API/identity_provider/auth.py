@@ -16,8 +16,7 @@ class UserLogin(BaseModel):
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
 
-#TODO : mettre la logique de création de compte et de connexion
-
+# Endpoint pour la création de compte
 @auth_router.post("/signup")
 def signup(user: User):
     # Mettre la logique de création de compte
@@ -41,7 +40,7 @@ def login(login_data: UserLogin):
         raise HTTPException(status_code=404, detail="Utilisateur non trouvé")
     if not verify_password(login_data.password, user["password"]):
         raise HTTPException(status_code=401, detail="Mot de passe incorrect")
-    # On supprime le mot de passe pour des raisons de sécurité
+
     # Puis si les informations sont valides, générer un token JWT
     access_token = create_access_token(data={"sub": {
         "id": user["id"],
