@@ -27,7 +27,6 @@ export class HeaderComponent {
 
   openLoginModal() {
     const dialogRef = this.dialog.open(LoginComponent, {
-      width: '340px'
     });
 
     dialogRef.afterClosed().subscribe(result => {

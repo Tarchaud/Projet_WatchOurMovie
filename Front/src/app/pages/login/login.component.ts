@@ -35,7 +35,6 @@ export class LoginComponent {
   openRegister() {
     this.dialogRef.close();
     this.dialog.open(RegisterComponent, {
-      width: '340px'
     });
   }
 }

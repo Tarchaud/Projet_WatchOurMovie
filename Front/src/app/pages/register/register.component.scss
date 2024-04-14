@@ -72,10 +72,6 @@
     overflow: hidden;
   }
   
-  .error-message {
-    color: #e50914;
-    margin-top: 10px;
-  }
   
   @keyframes shake {
     0%, 100% {
@@ -84,14 +80,40 @@
     25% {
       transform: translateX(-5px);
     }
-    75% {
+    50% {
       transform: translateX(5px);
     }
+    75% {
+      transform: translateX(-5px);
+    }
   }
-  
-  input.ng-invalid.ng-touched,
+
   .error-message {
-    border: 1px solid #e50914;
+    color: #e50914;
+    font-size: 0.85em;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: block;
     animation: shake 0.5s ease-in-out;
   }
   
+  input.ng-invalid.ng-touched {
+    border-color: inherit;
+  }
+  
+  input.ng-valid.ng-touched {
+    border-color: #ced4da;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  
+  .error-message2 {
+    color: #e50914;
+    font-size: 0.85em;
+    display: block;
+    animation: shake 0.5s ease-in-out;
+  }
