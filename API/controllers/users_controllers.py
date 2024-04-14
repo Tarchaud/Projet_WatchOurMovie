@@ -122,7 +122,7 @@ def getUserById(user_id: UUID):
         if not db_connection.is_connected():
             db_connection.reconnect()
         cursor = db_connection.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM User WHERE id = %s", (str(user_id),))
+        cursor.execute("SELECT id, username, email FROM User WHERE id = %s", (str(user_id),))
         user = cursor.fetchone()
         cursor.close()
         db_connection.disconnect()
