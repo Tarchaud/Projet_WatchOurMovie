@@ -17,20 +17,25 @@ export class ProfileComponent {
   constructor(private movieApiService: MovieApiService, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
+    const userId = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!).id : null;
 
-    if(!this.authService.currentUserValue) {
+    if(!userId) {
       this.router.navigate(['/home']);
       return;
     }
 
-    this.authService.getLikedMovies(this.authService.currentUserValue.id).subscribe(results => {
-      console.log(results)
-      this.filmSectionsLike = results;
+    this.authService.getLikedMovies(userId).subscribe(results => {
+      let moviesInfo = results.map((movie: any) => this.movieApiService.getMovieDetails(movie.film_tmdb_id));
+      forkJoin(moviesInfo).subscribe(results => {
+        this.filmSectionsLike = results;
+      });
     });
     
-    this.authService.getWatchedMovies(this.authService.currentUserValue.id).subscribe(results => {
-      console.log(results)
-      this.filmSectionsWatch = results;
+    this.authService.getWatchedMovies(userId).subscribe(results => {
+      let moviesInfo = results.map((movie: any) => this.movieApiService.getMovieDetails(movie.film_tmdb_id));
+      forkJoin(moviesInfo).subscribe(results => {
+        this.filmSectionsWatch = results;
+      });
     });
   }
 

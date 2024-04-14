@@ -12,16 +12,16 @@ import { NotificationService } from 'src/app/services/notification.service';
   styles: [`
     .notification {
         position: fixed;
-        bottom: 20px; /* Espacement du bas pour l'élever un peu au-dessus du bord inférieur */
-        left: 50%; /* Positionnement horizontal au milieu */
-        transform: translateX(-50%); /* Centrage précis avec une translation négative */
-        background: blue; /* Couleur de fond bleue */
-        color: white; /* Texte en blanc */
-        padding: 15px 30px; /* Un peu plus de padding pour agrandir le rectangle */
-        border-radius: 5px; /* Coins arrondis */
-        font-size: 1.2rem; /* Taille de texte augmentée */
-        z-index: 1000; /* Assurez-vous que la notification passe au-dessus des autres éléments */
-        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); /* Une légère ombre pour la profondeur */
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: blue;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        z-index: 1000;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
       }
       
       @keyframes fadeOut {
