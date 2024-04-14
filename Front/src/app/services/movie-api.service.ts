@@ -44,4 +44,15 @@ export class MovieApiService {
   fetchThrillerMovies(): Observable<any> {
     return this.http.get(`${this.baseurl}/discover/movie?api_key=${this.apiKey}&with_genres=53`);
   }
+
+  // Search function for search bar
+  searchMovies(query: string) {
+    return this.http.get(`${this.baseurl}/search/movie`, {
+      params: {
+        api_key: this.apiKey,
+        query: query,
+        include_adult: 'false'
+      }
+    });
+  }
 }

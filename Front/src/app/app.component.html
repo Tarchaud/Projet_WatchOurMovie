@@ -1,7 +1,6 @@
 <app-header></app-header>
 
 <div class="main-content">
-    <app-banner></app-banner>
-    <app-index *ngFor="let section of filmSections" [categoryName]="section.name" [films]="section.films"></app-index>
+    <router-outlet></router-outlet>
     <app-footer></app-footer>
 </div>

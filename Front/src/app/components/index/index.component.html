@@ -1,0 +1,21 @@
+<!-- film-gallery.component.html -->
+<div class="film-gallery">
+    <h1 class="gallery-title">{{ categoryName }}</h1>
+    <div class="carousel" #carousel>
+        <div class="carousel-track-container">
+            <ul class="carousel-track" #track>
+                <li class="carousel-slide" *ngFor="let filmGroup of getFilmGroups()">
+                    <div *ngFor="let film of filmGroup" class="film">
+                        <img [src]="film.imageUrl" [alt]="film.title" class="film-image">
+                        <div class="film-details">
+                            <h3>{{ film.title }}</h3>
+                            <p>{{ film.releaseDate | date:'MMM d, y' }}</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <button class="carousel-button carousel-button-left" (click)="moveSlide('prev')">&#10094;</button>
+        <button class="carousel-button carousel-button-right" (click)="moveSlide('next')">&#10095;</button>
+    </div>
+</div>

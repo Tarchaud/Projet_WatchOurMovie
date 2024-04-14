@@ -3,9 +3,9 @@
 }
 
 .carousel-inner .carousel-item img {
-    width: 100%; /* Assurez-vous que la largeur est définie à 100% */
+    width: 100%;
     height: 350px;
-    object-fit: cover; /* Cette propriété assure que l'image couvre l'espace sans être déformée */
+    object-fit: cover;
 }
 
 .carousel-caption h2 {

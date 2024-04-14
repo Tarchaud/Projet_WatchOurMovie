@@ -3,11 +3,16 @@
     <div class="logo">
         <a href="/">WatchOurMovie</a>
     </div>
+    <!-- header.component.html -->
     <div class="search-container">
         <input type="text" placeholder="Recherche..." (keyup)="onSearchKeyUp($event)">
-        <button (click)="onSearch()">
-            <i class="search-icon">🔍</i>
-        </button>
+        <div class="search-results" *ngIf="searchResults.length > 0">
+            <ul>
+                <li *ngFor="let movie of searchResults" (click)="onSelectMovie(movie.id)">
+                    {{ movie.title }}
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="user-info">
         <span>{{ userName }}</span>
