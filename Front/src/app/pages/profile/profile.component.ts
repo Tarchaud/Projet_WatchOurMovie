@@ -29,12 +29,11 @@ export class ProfileComponent {
       let moviesInfo = results.map((movie: any) => this.movieApiService.getMovieDetails(movie.film_tmdb_id));
       forkJoin(moviesInfo).subscribe(results => {
         this.filmSectionsLike = results;
-    
-        this.authService.getWatchedMovies(userId).subscribe(results => {
-          let moviesInfo = results.map((movie: any) => this.movieApiService.getMovieDetails(movie.film_tmdb_id));
-          forkJoin(moviesInfo).subscribe(results => {
-            this.filmSectionsWatch = results;
-          });
+      });
+      this.authService.getWatchedMovies(userId).subscribe(results => {
+        let moviesInfo = results.map((movie: any) => this.movieApiService.getMovieDetails(movie.film_tmdb_id));
+        forkJoin(moviesInfo).subscribe(results => {
+          this.filmSectionsWatch = results;
         });
       });
     });
