@@ -91,6 +91,18 @@ export class AuthService {
     });
   }
 
+  getUserById(userId: string): Observable<User> {
+    const url = `${this.baseurl}/auth/${userId}`;
+    return this.http.get<User>(url, {
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+    });
+  }
+
+  getUsersByIds(userIds: string[]): Observable<User[]> {
+    const requests = userIds.map(id => this.getUserById(id));
+    return forkJoin(requests);
+  }
+
   toggleSeen(userId: string, movieId: number, seen: boolean, liked: boolean) {
     const url = `${this.baseurl}/user_films/${userId}/films/`;
     const filmData = {

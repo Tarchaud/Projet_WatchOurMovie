@@ -30,6 +30,7 @@ export class TranslationService {
       'Format d\'email invalide': 'Invalid email format',
       'Films Aimés': 'Liked Movies',
       'Films Vus': 'Watched Movies',
+      'Groups': 'Groups',
     },
     fr: {
       'Identifiant': 'Identifiant',
@@ -48,6 +49,7 @@ export class TranslationService {
       'Format d\'email invalide': 'Format d\'email invalide',
       'Films Aimés': 'Films Aimés',
       'Films Vus': 'Films Vus',
+      'Groups': 'Groupes',
     }
   };
 

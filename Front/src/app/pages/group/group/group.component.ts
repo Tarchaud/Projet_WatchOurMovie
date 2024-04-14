@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class GroupComponent implements OnInit {
   groups: any[] = [];
   expandedGroupId: string | null = null;
+  userNames: { [key: string]: string } = {};
 
   constructor(
     private groupService: GroupService,
@@ -24,8 +25,15 @@ export class GroupComponent implements OnInit {
     const user = this.authService.currentUserValue;
     if (user && user.id) {
       this.groupService.getGroupsByUserId(user.id).subscribe(
-        (data) => {
-          this.groups = data;
+        (groups) => {
+          this.groups = groups;
+          groups.forEach((group: any) => {
+            group.user_ids.forEach((userId: string) => {
+              this.authService.getUserById(userId).subscribe((user: any) => {
+                this.userNames[userId] = user.username;
+              });
+            });
+          });
         },
         (error) => {
           console.error('Error fetching groups', error);

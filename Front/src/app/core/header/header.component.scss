@@ -155,3 +155,86 @@
   width: 30px;
   height: auto;
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header .logo a {
+  color: white;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Header navigation links style */
+.header .navigation {
+  display: flex;
+  align-items: center;
+}
+
+.header .navigation a,
+.header .navigation .group-link {
+  color: white;
+  text-decoration: none;
+  font-size: 20px; /* Adjusted font size to match the user info */
+  margin-left: 20px;
+  padding: 5px 10px;
+  transition: color 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    color: #ddd;
+  }
+}
+
+/* Group navigation link specific style */
+.header .navigation .group-link {
+  font-weight: bold; /* If you want the group link to be bold like the logo */
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  position: relative;
+  z-index: 2;
+  max-width: 500px;
+  margin: 0 20px;
+}
+
+/* ... Rest of your existing CSS ... */
+
+.flag-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  line-height: 0;
+}
+
+.flag-button img {
+  display: block;
+  width: 30px;
+  height: auto;
+}
+
+/* Media query adjustments */
+@media (max-width: 768px) {
+  /* ... */
+  .header .navigation {
+    justify-content: center;
+  }
+
+  .header .navigation a,
+  .header .navigation .group-link {
+    margin-left: 0;
+    margin-right: 10px;
+  }
+}
+
