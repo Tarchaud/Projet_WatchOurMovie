@@ -10,6 +10,10 @@
             <h3>Description</h3>
             <p>{{ film.overview }}</p>
         </div>
+        <div class="movie-actions">
+            <button (click)="toggleLike(film.id)">❤️ J'aime {{ film.likes }}</button>
+            <button (click)="toggleSeen(film.id)">👁️ Vu</button>
+        </div>
         <div class="movie-additional-info">
             <div class="movie-categories">
                 <h4>Catégories</h4>

@@ -21,4 +21,12 @@ export class MovieDetailsComponent {
       });
     });
   }
+
+  toggleLike(movieId: number) {
+    console.log('Like button clicked for movie:', movieId);
+  }
+
+  toggleSeen(movieId: number) {
+      console.log('Seen button clicked for movie:', movieId);
+  }
 }
