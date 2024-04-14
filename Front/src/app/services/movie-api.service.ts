@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class MovieApiService {
-  private baseurl : string = 'http://localhost:8000/';
+  private baseurl : string = 'http://localhost:8000';
 
   constructor( private http : HttpClient ) { }
 
@@ -35,6 +35,14 @@ export class MovieApiService {
 
   getRecommendedMovies(): Observable<any> {
     return this.http.get(`${this.baseurl}/movies/trending/`, {
+      params: {
+        language: "fr-FR"
+      }
+    });
+  }
+
+  fetchBannerDetails () : Observable<any> {
+    return this.http.get( this.baseurl + "/movies/trending/", {
       params: {
         language: "fr-FR"
       }
