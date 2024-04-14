@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
-import { IndexComponent } from './pages/index/index.component';
+import { IndexComponent } from './components/index/index.component';
 import { HeaderComponent } from './core/header/header.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
