@@ -80,3 +80,26 @@
 .recommended-movies h3 {
     margin-bottom: 10px;
 }
+
+.movie-actions button {
+    margin-right: 10px;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.movie-actions button:hover {
+    background-color: #e50914;
+    color: white;
+}
+
+.liked {
+    background-color: #e50914;
+    color: white;
+}
+
+.seen {
+    background-color: green;
+    color: white;
+}

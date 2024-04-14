@@ -10,7 +10,7 @@ router = APIRouter( prefix="/movies", tags=["movies"])
 
 # Route pour obtenir le détails d'un film
 @router.get("/{movie_id}/details")
-async def get_movie_details(movie_id: int, language : Optional[str] = "fr-FR"):
+async def get_movie_details(movie_id: int, language : Optional[str] = "fr-FR", append_to_response: Optional[str] = ""):
     """
     Obtention des détails d'un film par ID.
     Renvoie le détail du film correspondant à l'ID donné.
@@ -18,6 +18,7 @@ async def get_movie_details(movie_id: int, language : Optional[str] = "fr-FR"):
 
     params = {
         "language": language,
+        "append_to_response": append_to_response,
     }
 
     try:

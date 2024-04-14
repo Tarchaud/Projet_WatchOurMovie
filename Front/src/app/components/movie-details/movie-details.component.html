@@ -10,6 +10,10 @@
             <h3>Description</h3>
             <p>{{ film.overview }}</p>
         </div>
+        <div class="movie-actions">
+            <button (click)="toggleLike(film.id)">❤️ J'aime {{ film.likes }}</button>
+            <button (click)="toggleSeen(film.id)">👁️ Vu</button>
+        </div>
         <div class="movie-additional-info">
             <div class="movie-categories">
                 <h4>Catégories</h4>
@@ -20,10 +24,9 @@
                 </ul>
             </div>
         </div>
+        <div *ngIf="url_created">
+          <h4>Bande Annonce</h4>
+          <iframe  width="560" height="315" [src]="trailer_url" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
     </div>
-</div>
-
-<div class="recommended-movies">
-    <h3>Recommended Movies</h3>
-    <!-- ici vous pouvez utiliser un carousel similaire à celui que vous avez déjà fait -->
 </div>

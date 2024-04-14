@@ -20,7 +20,8 @@ export class MovieApiService {
   getMovieDetails(movieId: string): Observable<any> {
     return this.http.get(`${this.baseurl}/movies/${movieId}/details/`, {
       params: {
-        language: "fr-FR"
+        language: "fr-FR",
+        append_to_response : "videos"
       }
     });
   }
