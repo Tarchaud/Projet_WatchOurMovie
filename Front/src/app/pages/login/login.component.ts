@@ -11,6 +11,7 @@ import { RegisterComponent } from '../register/register.component';
 export class LoginComponent {
   username: string = '';
   password: string = '';
+  loginError: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
@@ -21,9 +22,11 @@ export class LoginComponent {
   onLogin() {
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
+        this.loginError = false;
         this.dialogRef.close();
       },
       error: (error) => {
+        this.loginError = true;
         console.error('Erreur lors de la connexion', error);
       }
     });

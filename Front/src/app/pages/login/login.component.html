@@ -1,11 +1,19 @@
 <div class="login-modal">
-    <form (ngSubmit)="onLogin()">
-      <input type="text" [(ngModel)]="username" name="username" placeholder="Identifiant" required>
-      <input type="password" [(ngModel)]="password" name="password" placeholder="Mot de passe" required>
-      <button type="submit">Connexion</button>
-      <div class="login-footer">
-        <p>Pas encore de compte? <a (click)="openRegister()">Inscrivez-vous</a></p>
-      </div>
-    </form>
-  </div>
-  
+  <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+    <input type="text" [(ngModel)]="username" name="username" placeholder="Identifiant" required #usernameInput="ngModel">
+    <div *ngIf="usernameInput.invalid && usernameInput.touched" class="error-message">
+      L'identifiant est requis.
+    </div>
+    <input type="password" [(ngModel)]="password" name="password" placeholder="Mot de passe" required #passwordInput="ngModel">
+    <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error-message">
+      Le mot de passe est requis.
+    </div>
+    <button type="submit" [disabled]="loginForm.invalid">Connexion</button>
+    <div *ngIf="loginError" class="error-message">
+      Erreur de login ou de mot de passe.
+    </div>
+    <div class="login-footer">
+      <p>Pas encore de compte? <a (click)="openRegister()">Inscrivez-vous</a></p>
+    </div>
+  </form>
+</div>

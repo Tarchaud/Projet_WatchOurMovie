@@ -72,3 +72,26 @@
     overflow: hidden;
   }
   
+  .error-message {
+    color: #e50914;
+    margin-top: 10px;
+  }
+  
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    75% {
+      transform: translateX(5px);
+    }
+  }
+  
+  input.ng-invalid.ng-touched,
+  .error-message {
+    border: 1px solid #e50914;
+    animation: shake 0.5s ease-in-out;
+  }
+  
