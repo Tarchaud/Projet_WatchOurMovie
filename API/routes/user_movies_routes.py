@@ -4,7 +4,7 @@ from typing import List, Optional
 from uuid import UUID, uuid4
 from fastapi.security import OAuth2PasswordBearer
 
-from controllers.user_movies_controllers import getAllMoviesLikedByUser, getAllMoviesSeenByUser, addMovieToUser, deleteLikedMovieFromUser, deleteSeenMovieFromUser
+from controllers.user_movies_controllers import getAllMoviesLikedByUser, getAllMoviesSeenByUser, addMovieToUser, deleteLikedMovieFromUser, deleteSeenMovieFromUser, getMovieForUser, updateMovieForUser
 from identity_provider.jwt_utils import decode_token
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -39,7 +39,7 @@ def get_user_seen_films(user_id: UUID, token: str = Depends(oauth2_scheme)):
         )
     return getAllMoviesSeenByUser(user_id)
 
-# Endpoint pour ajouter un film aimé ou déjà vu par un utilisateur
+# Endpoint pour ajouter un film à la liste des films aimés ou déjà vus par un utilisateur
 @router.post("/{user_id}/films/", response_model=UserFilm)
 def add_user_film(user_id: UUID, film: UserFilm, token: str = Depends(oauth2_scheme)):  
     payload = decode_token(token)
@@ -48,7 +48,13 @@ def add_user_film(user_id: UUID, film: UserFilm, token: str = Depends(oauth2_sch
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Invalid token",
         )
-    return addMovieToUser(user_id, film)
+    
+    existing_film = getMovieForUser(user_id, film.film_tmdb_id)
+
+    if existing_film:
+        return updateMovieForUser(user_id, film)
+    else:
+        return addMovieToUser(user_id, film)
 
 # Endpoint pour supprimer un film aimé par un utilisateur
 @router.delete("/{user_id}/liked_films/{film_tmdb_id}", response_model=UserFilm)
