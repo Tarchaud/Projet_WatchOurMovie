@@ -1,19 +1,20 @@
-.login-modal {
+.register-modal {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0.95); // Fond légèrement transparent
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    width: 300px;
+    width: 300px; // Largeur du modal
   
     form {
       width: 100%;
     }
   
     input[type="text"],
+    input[type="email"], // Assure que le style s'applique aussi aux champs email
     input[type="password"] {
       width: calc(100% - 20px);
       padding: 10px;
@@ -33,7 +34,7 @@
       padding: 10px;
       border: none;
       border-radius: 4px;
-      background-color: #333;
+      background-color: #333; // Couleur de fond du bouton
       color: white;
       font-weight: bold;
       cursor: pointer;
@@ -41,6 +42,24 @@
   
       &:hover {
         background-color: #555;
+      }
+    }
+  
+    // Si tu veux un footer similaire au login pour ajouter un lien ou autre
+    .register-footer {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #999;
+  
+      a {
+        color: #007bff;
+        cursor: pointer;
+        text-decoration: none;
+  
+        &:hover {
+          text-decoration: underline;
+          color: #0056b3;
+        }
       }
     }
   }
@@ -54,19 +73,3 @@
     overflow: hidden;
   }
   
-  .login-footer {
-    margin-top: 15px; // Ajoute un espace au-dessus du footer
-    font-size: 14px; // Ajuste la taille de police si nécessaire
-    color: #999; // Couleur plus douce pour le texte
-
-    a {
-      color: #007bff; // Couleur bleue pour le lien, change selon ton thème
-      cursor: pointer;
-      text-decoration: none; // Supprime le soulignement par défaut
-
-      &:hover {
-        text-decoration: underline; // Souligne au survol pour indiquer la cliquabilité
-        color: #0056b3; // Assombrit la couleur au survol
-      }
-    }
-  }

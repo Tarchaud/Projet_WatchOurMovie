@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth.service';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ export class LoginComponent {
 
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
-    private authService: AuthService
+    private authService: AuthService,
+    public dialog: MatDialog
   ) { }
 
   onLogin() {
@@ -24,6 +26,13 @@ export class LoginComponent {
       error: (error) => {
         console.error('Erreur lors de la connexion', error);
       }
+    });
+  }
+
+  openRegister() {
+    this.dialogRef.close();
+    this.dialog.open(RegisterComponent, {
+      width: '340px'
     });
   }
 }
