@@ -14,12 +14,6 @@
   font-weight: bold;
 }
 
-.search-container {
-  display: flex;
-  align-items: center;
-}
-
-
 .search-container input[type="text"] {
   padding: 8px;
   font-size: 16px;
@@ -34,6 +28,33 @@
   cursor: pointer;
   color: white;
   font-size: 20px;
+}
+
+
+.search-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #333;
+  padding: 10px 20px;
+}
+
+.search-container input[type="text"],
+.search-container button {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .search-container {
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+  }
+
+  .search-container input[type="text"] {
+      margin-bottom: 10px;
+  }
 }
 
 .user-info {
@@ -78,3 +99,52 @@
     }
   }
   
+  .search-results {
+    position: absolute;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background: black;
+    top: 100%;
+}
+
+.search-results ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.search-results li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.search-results li:hover {
+    background-color: #f8f8f8;
+}
+
+.header .logo {
+  display: flex;
+  align-items: center; /* Cela aligne verticalement le texte et le bouton */
+}
+
+.logo a,
+.logo button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flag-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  line-height: 0; /* Élimine l'espace supplémentaire autour de l'image du bouton */
+}
+
+.flag-button img {
+  display: block; /* Empêche l'espace sous l'image comme s'il s'agissait d'une ligne de texte */
+  width: 30px; /* Taille ajustée pour le bouton */
+  height: auto;
+}
