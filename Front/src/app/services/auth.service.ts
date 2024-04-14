@@ -15,6 +15,7 @@ interface User {
 export class AuthService {
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
+  private baseurl : string = 'http://localhost:8000';
 
   constructor(private http: HttpClient) {
     const user = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!) : null;
@@ -50,5 +51,45 @@ export class AuthService {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
     this.currentUserSubject.next(null);
+  }
+
+  getLikedMovies(userId: string) {
+    const url = `${this.baseurl}/user_films/${userId}/liked_films/`;
+    return this.http.get<any>(url, {
+      headers: { Authorization: `Bearer ` + localStorage.getItem('token') }
+    });
+  }
+
+  getWatchedMovies(userId: string) {
+    const url = `${this.baseurl}/user_films/${userId}/seen_films/`;
+    return this.http.get<any>(url, {
+      headers: { Authorization: `Bearer ` + localStorage.getItem('token') }
+    });
+  }
+
+  toggleLike(userId: string, movieId: number, like: boolean) {
+    const url = `${this.baseurl}/user_films/${userId}/liked_films/`;
+    const filmData = {
+      user_id: userId,
+      film_tmdb_id: movieId,
+      liked: like
+    };
+    
+    return this.http.post<any>(url, filmData, {
+      headers: { Authorization: `Bearer ` + localStorage.getItem('token') }
+    });
+  }
+
+  toggleSeen(userId: string, movieId: number, seen: boolean) {
+    const url = `${this.baseurl}/user_films/${userId}/films/`;
+    const filmData = {
+      user_id: userId,
+      film_tmdb_id: movieId,
+      seen: seen
+    };
+    
+    return this.http.post<any>(url, filmData, {
+      headers: { Authorization: `Bearer ` + localStorage.getItem('token') }
+    });
   }
 }

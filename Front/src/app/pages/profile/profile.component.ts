@@ -11,7 +11,8 @@ import { MovieApiService } from 'src/app/services/movie-api.service';
 })
 export class ProfileComponent {
 
-  filmSections: any = [];
+  filmSectionsLike: any = [];
+  filmSectionsWatch: any = [];
 
   constructor(private movieApiService: MovieApiService, private router: Router, private authService: AuthService) { }
 
@@ -21,18 +22,15 @@ export class ProfileComponent {
       this.router.navigate(['/home']);
       return;
     }
+
+    this.authService.getLikedMovies(this.authService.currentUserValue.id).subscribe(results => {
+      console.log(results)
+      this.filmSectionsLike = results;
+    });
     
-    let requests = [
-      this.movieApiService.getLikedMovies(this.authService.currentUserValue.id).pipe(
-        map((films: any) => ({ name: 'Films aimés', films: films.results }))
-      ),
-      this.movieApiService.getWatchedMovies(this.authService.currentUserValue.id).pipe(
-        map((films: any) => ({ name: 'Films vus', films: films.results }))
-      )
-    ];
-    
-    forkJoin(requests).subscribe(results => {
-      this.filmSections = results;
+    this.authService.getWatchedMovies(this.authService.currentUserValue.id).subscribe(results => {
+      console.log(results)
+      this.filmSectionsWatch = results;
     });
   }
 

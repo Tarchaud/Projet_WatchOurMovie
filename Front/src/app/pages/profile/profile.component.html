@@ -1,1 +1,2 @@
-<app-index *ngFor="let section of filmSections" [categoryName]="section.name" [films]="section.films"></app-index>
+<app-index categoryName="Films Aimés" [films]="filmSectionsLike"></app-index>
+<app-index categoryName="Films Vus" [films]="filmSectionsWatch"></app-index>
