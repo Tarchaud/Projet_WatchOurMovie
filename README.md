@@ -4,7 +4,7 @@ WatchOurMovie est une application web qui propose aux utilisateurs des recommand
 
 ## Architecture / Technologies utilisées
 
-![assets/architecture.png](asset/architecture.png)
+![assets/architecture.png](assets/architecture.png)
 
 * **API** : FastAPI
 * **Moteur de Recommandation** : Python
@@ -56,12 +56,12 @@ docker-compose down --rmi all -v
 
 ### Page d'accueil
 
-![assets/screenshots/screenshot1.png](asset/screenshots/screenshot1.png)
+![assets/screenshots/screenshot1.png](assets/screenshots/screenshot1.png)
 
 ### Informations sur un film
 
-![assets/screenshots/screenshot2.png](asset/screenshots/screenshot2.png)
+![assets/screenshots/screenshot2.png](assets/screenshots/screenshot2.png)
 
 ### Système de recherche interactif
 
-![assets/screenshots/screenshot3.png](asset/screenshots/screenshot3.png)
+![assets/screenshots/screenshot3.png](assets/screenshots/screenshot3.png)
