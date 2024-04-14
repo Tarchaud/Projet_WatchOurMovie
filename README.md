@@ -9,7 +9,7 @@ WatchOurMovie est une application web qui propose aux utilisateurs des recommand
 * **API** : FastAPI
 * **Moteur de Recommandation** : Python
 * **Frontend** : Angular
-* **Caching** : cachetools
+* **Caching** : module Python _cachetools_
 * **Fournisseur d'Identité** : Python (JWT)
 * **Gestion des Utilisateurs** : Python
 * **Base de Données** : MySQL
@@ -23,6 +23,11 @@ WatchOurMovie est une application web qui propose aux utilisateurs des recommand
 
 ## Prérequis
 Avant de lancer l'application, assurez-vous d'avoir installé Docker et Docker Compose sur votre système.
+
+Il vous faut aussi un `access token` pour l'API de TMDB à mettre dans le fichier `API/.env` dans la variable `TMDB_ACCESS_TOKEN`. 
+
+Lien vers api TMDB pour générer un token access : [lien_doc_TMDB](https://developer.themoviedb.org/v4/docs/getting-started)
+
 
 ## Installation et utilisation
 
@@ -51,6 +56,12 @@ docker-compose down
 ```bash
 docker-compose down --rmi all -v
 ```
+
+## Documentation de l'API
+
+Après l'application lancer, il est possible d'accéder à la documentation de l'API via un des liens suivants :
+- [http://localhost:8000/docs](http://localhost:8000/docs)
+- [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
 ## Screenshots
 
