@@ -1,8 +1,8 @@
 <div class="recommended-movies-section">
     <h2>Recommended Movies</h2>
     <div class="recommended-movies-container">
-        <div class="movie-card" *ngFor="let movie of recommendedMovies">
-            <img [src]="movie.imageUrl" alt="{{ movie.title }}" class="movie-card-image">
+        <div class="movie-card" *ngFor="let movie of recommendedMovies" (click)="openFilmDetails(movie)">
+            <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }}" class="movie-card-image">
             <div class="movie-card-details">
                 <h3>{{ movie.title }}</h3>
                 <p>{{ movie.releaseDate | date:'mediumDate' }}</p>
