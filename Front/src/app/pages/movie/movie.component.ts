@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
 export class MovieComponent {
 
   constructor() {
-    console.log("gg")
   }
 
 }

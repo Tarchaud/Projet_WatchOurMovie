@@ -18,6 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 import { MovieComponent } from './pages/movie/movie.component';
 import { HomeComponent } from './pages/home/home.component';
+import { RecommendedMoviesComponent } from './components/recommended-movies/recommended-movies.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HomeComponent } from './pages/home/home.component';
     FilmCardComponent,
     MovieDetailsComponent,
     MovieComponent,
-    HomeComponent
+    HomeComponent,
+    RecommendedMoviesComponent
   ],
   imports: [
     BrowserModule,

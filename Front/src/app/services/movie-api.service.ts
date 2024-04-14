@@ -32,4 +32,12 @@ export class MovieApiService {
       }
     });
   }
+
+  getRecommendedMovies(): Observable<any> {
+    return this.http.get(`${this.baseurl}/movies/trending/`, {
+      params: {
+        language: "fr-FR"
+      }
+    });
+  }
 }
