@@ -17,6 +17,7 @@ export class HeaderComponent {
     const query = event.target.value;
     if (query.length > 1) {
       this.movieAPI.searchMovies(query).subscribe((response: any) => {
+        console.log(response.results)
         this.searchResults = response.results.slice(0, 5);
       });
     } else {

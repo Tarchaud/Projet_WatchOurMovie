@@ -14,11 +14,11 @@ export class HomeComponent implements OnInit {
   constructor(private movieApiService: MovieApiService) { }
 
   ngOnInit(): void {
-    let sections = ["Action", "Aventure", "Comédie", "Science-Fiction", "Fantastique"];
+    let sections = [{ name: "Action", id: 28 }, { name: "Aventure", id: 12 }, { name: "Comédie", id: 35 }, { name: "Romance", id: 10749 }, { name: "Science-Fiction", id: 878 }];
     
     let requests = sections.map(section => 
-      this.movieApiService.getMoviesByGenre(section).pipe(
-        map((films: any) => ({ name: section, films: films }))
+      this.movieApiService.getMoviesByGenre(section.id).pipe(
+        map((films: any) => ({ name: section.name, films: films.results }))
       )
     );
     

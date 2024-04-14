@@ -5,8 +5,17 @@ from routes.users_routes import router as user_router
 from routes.user_movies_routes import router as user_movies_router
 from routes.groups_routes import router as group_router
 from identity_provider.auth import auth_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins= ["*"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 app.include_router(auth_router) # Ajout des routes d'authentification
 app.include_router(movie_router) # Ajout des routes films

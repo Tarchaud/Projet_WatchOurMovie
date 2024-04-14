@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-index',
@@ -11,11 +12,14 @@ export class IndexComponent {
 
   @ViewChild('track') track!: ElementRef;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   currentSlideIndex = 0;
 
   getFilmGroups() {
+
+    console.log(this.films)
+
     const groupSize = 4;
     return new Array(Math.ceil(this.films.length / groupSize))
         .fill(null)
@@ -34,5 +38,9 @@ export class IndexComponent {
     
     const moveDistance = -this.currentSlideIndex * trackEl.clientWidth;
     trackEl.style.transform = `translateX(${moveDistance}px)`;
-}
+  }
+
+  openFilmDetails(film: any) {
+    this.router.navigate(['/movie', film.id]);
+  }
 }

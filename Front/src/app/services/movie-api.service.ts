@@ -8,7 +8,7 @@ export class MovieApiService {
 
   constructor( private http : HttpClient ) { }
 
-  getMoviesByGenre(genre: string): Observable<any> {
+  getMoviesByGenre(genre: number): Observable<any> {
     return this.http.get(`${this.baseurl}/movies/genre/`, {
       params: {
         language: "fr-FR",
