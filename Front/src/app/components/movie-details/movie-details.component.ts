@@ -4,6 +4,7 @@ import { MovieApiService } from 'src/app/services/movie-api.service';
 
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AuthService } from 'src/app/services/auth.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-movie-details',
@@ -17,7 +18,7 @@ export class MovieDetailsComponent {
   trailer_url ?: SafeResourceUrl;
   url_created = false
 
-  constructor(private movieAPI: MovieApiService, private authService: AuthService, private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer) {
+  constructor(private movieAPI: MovieApiService, private authService: AuthService, private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer, private notificationService: NotificationService) {
     this.id = "";
     this.route.params.subscribe(async params => {
       this.id = params['id'];
@@ -40,7 +41,10 @@ export class MovieDetailsComponent {
       return;
     }
     this.authService.getLikedMovies(userId).subscribe(result => {
-      this.authService.toggleLike(userId, movieId, result.includes(movieId));
+      console.log(result.filter((mv: any) => mv.film_tmdb_id === movieId).length);
+      this.authService.toggleLike(userId, movieId, result.filter((mv: any) => mv.film_tmdb_id === movieId).length === 0).subscribe(result => {
+        this.notificationService.showNotification('Film marqué comme ' + (result.liked ? "" : "non") + ' favori !');
+      });
     });
   }
 
@@ -50,7 +54,9 @@ export class MovieDetailsComponent {
       return;
     }
     this.authService.getWatchedMovies(userId).subscribe(result => {
-      this.authService.toggleSeen(userId, movieId, result.includes(movieId));
+      this.authService.toggleSeen(userId, movieId, result.filter((mv: any) => mv.film_tmdb_id === movieId).length === 0).subscribe(result => {
+        this.notificationService.showNotification('Film marqué comme ' + (result.seen ? "" : "non") + ' vu !');
+      });
     });
   }
 

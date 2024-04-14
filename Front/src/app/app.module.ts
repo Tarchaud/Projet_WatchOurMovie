@@ -23,6 +23,7 @@ import { MovieComponent } from './pages/movie/movie.component';
 import { HomeComponent } from './pages/home/home.component';
 import { RecommendedMoviesComponent } from './components/recommended-movies/recommended-movies.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { NotificationComponent } from './core/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     RecommendedMoviesComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

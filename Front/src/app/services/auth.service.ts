@@ -68,12 +68,14 @@ export class AuthService {
   }
 
   toggleLike(userId: string, movieId: number, like: boolean) {
-    const url = `${this.baseurl}/user_films/${userId}/liked_films/`;
+    const url = `${this.baseurl}/user_films/${userId}/films/`;
     const filmData = {
       user_id: userId,
       film_tmdb_id: movieId,
       liked: like
     };
+
+    console.log(filmData);
     
     return this.http.post<any>(url, filmData, {
       headers: { Authorization: `Bearer ` + localStorage.getItem('token') }
