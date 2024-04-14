@@ -1,19 +1,30 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class GroupService {
+  private apiUrl: string = 'http://localhost:8000/groups';
 
-  private baseurl : string = 'http://localhost:8000';
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
+  getGroupsByUserId(userId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/user/${userId}`, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      })
+    });
+  }
 
-  getGroups() {
-    const url = `${this.baseurl}/groups`;
-    return this.http.get<any>(url, {
-      headers: { Authorization: `Bearer ` + localStorage.getItem('token') }
+  createGroup(groupName: string, userId: string): Observable<any> {
+    const group = {
+      name: groupName,
+      user_ids: [userId]
+    };
+    return this.http.post(this.apiUrl, group, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      })
     });
   }
 }
