@@ -40,7 +40,7 @@ def get_user_seen_films(user_id: UUID, token: str = Depends(oauth2_scheme)):
     return getAllMoviesSeenByUser(user_id)
 
 # Endpoint pour ajouter un film à la liste des films aimés ou déjà vus par un utilisateur
-@router.post("/{user_id}/liked_films/", response_model=UserFilm)
+@router.post("/{user_id}/films/", response_model=UserFilm)
 def add_user_film(user_id: UUID, film: UserFilm, token: str = Depends(oauth2_scheme)):  
     payload = decode_token(token)
     if not payload:
