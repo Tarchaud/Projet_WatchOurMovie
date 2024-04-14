@@ -1,6 +1,17 @@
 <div class="groups-list">
     <div *ngFor="let group of groups" class="group">
-      <h2>{{ group.name }}</h2>
+      <h2 (click)="toggleGroup(group.id)">{{ group.name }}</h2>
+      <div *ngIf="group.id === expandedGroupId">
+        <ul>
+          <li *ngFor="let userId of group.user_ids">{{ userId }}</li>
+        </ul>
+        <div class="user-management">
+          <input type="text" placeholder="Add User ID" #newUserId>
+          <button (click)="addUserToGroup(newUserId.value, group.id)">Add User</button>
+          <input type="text" placeholder="Remove User ID" #removeUserId>
+          <button (click)="removeUserFromGroup(removeUserId.value, group.id)">Remove User</button>
+        </div>
+      </div>
     </div>
     <div class="create-group">
       <input type="text" placeholder="Group Name" #groupName>

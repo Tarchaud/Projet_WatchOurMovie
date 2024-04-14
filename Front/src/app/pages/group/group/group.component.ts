@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class GroupComponent implements OnInit {
   groups: any[] = [];
+  expandedGroupId: string | null = null;
 
   constructor(
     private groupService: GroupService,
@@ -49,5 +50,17 @@ export class GroupComponent implements OnInit {
     } else {
       console.error('User not logged in');
     }
-  }  
+  }
+
+  toggleGroup(groupId: string): void {
+    this.expandedGroupId = this.expandedGroupId === groupId ? null : groupId;
+  }
+
+  addUserToGroup(userId: string, groupId: string): void {
+
+  }
+
+  removeUserFromGroup(userId: string, groupId: string): void {
+
+  }
 }
