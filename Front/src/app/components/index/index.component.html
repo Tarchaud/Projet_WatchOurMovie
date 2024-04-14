@@ -5,15 +5,20 @@
         <div class="carousel-track-container">
             <ul class="carousel-track" #track>
                 <li class="carousel-slide" *ngFor="let filmGroup of getFilmGroups()">
-                    <div *ngFor="let film of filmGroup" class="film" (click)="openFilmDetails(film)">
-                        <img [src]="'https://image.tmdb.org/t/p/w500' + film.poster_path" [alt]="film.title" class="film-image">
-                        <div class="film-details">
-                            <h3>{{ film.title }}</h3>
-                            <p>{{ film.releaseDate | date:'MMM d, y' }}</p>
+                    <ng-container *ngIf="filmGroup.length > 0;">
+                        <div *ngFor="let film of filmGroup" class="film" (click)="openFilmDetails(film)">
+                            <img [src]="'https://image.tmdb.org/t/p/w500' + film.poster_path" [alt]="film.title" class="film-image">
+                            <div class="film-details">
+                                <h3>{{ film.title }}</h3>
+                                <p>{{ film.releaseDate | date:'MMM d, y' }}</p>
+                            </div>
                         </div>
-                    </div>
+                    </ng-container>
                 </li>
             </ul>
+        </div>
+        <div *ngIf="films.length === 0">
+            <div class="empty-message">Aucun film disponible pour cette catégorie.</div>
         </div>
         <button class="carousel-button carousel-button-left" (click)="moveSlide('prev')">&#10094;</button>
         <button class="carousel-button carousel-button-right" (click)="moveSlide('next')">&#10095;</button>
