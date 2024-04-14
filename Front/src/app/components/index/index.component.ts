@@ -17,9 +17,6 @@ export class IndexComponent {
   currentSlideIndex = 0;
 
   getFilmGroups() {
-
-    console.log(this.films)
-
     const groupSize = 4;
     return new Array(Math.ceil(this.films.length / groupSize))
         .fill(null)

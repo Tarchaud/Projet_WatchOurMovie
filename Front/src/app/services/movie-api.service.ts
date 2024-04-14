@@ -28,6 +28,7 @@ export class MovieApiService {
   searchMovies(query: string) {
     return this.http.get(`${this.baseurl}/movies/search/`, {
       params: {
+        title: query,
         language: "fr-FR"
       }
     });
