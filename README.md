@@ -16,7 +16,7 @@ WatchOurMovie est une application web qui propose aux utilisateurs des recommand
 
 ## Fonctionnalités
 
-* **Recommandations Personnalisées** : En utilisant un moteur de recommandation sophistiqué, WatchOurMovie suggère des films adaptés aux goûts de chaque utilisateur.
+* **Recommandations Personnalisées** : En utilisant un moteur de recommandation simplifié, WatchOurMovie suggère des films adaptés aux goûts de chaque utilisateur. (Le système recense tous les films présents sur le profil de l'utilisateur et récupère les 3 genres les plus représentés. On cherche ensuite sur TMDB 10 films pour chaque genre que l'utilisateur n'a jamais vu et on lui renvoie le tout en mélangeant le résultat)
 * **Authentification et Autorisation des Utilisateurs** : L'authentification sécurisée des utilisateurs est gérée via Python avec gestion interne des JWT.
 * **Caching Efficace** : Les requêtes sont mises en cache à l'aide de cachetools pour améliorer les performances et réduire les appels d'API redondants.
 * **Gestion des Utilisateurs** : Les profils et préférences des utilisateurs sont gérés en interne.

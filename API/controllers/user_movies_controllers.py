@@ -38,6 +38,17 @@ def connect_to_database():
 
 db_connection = connect_to_database()
 
+def getAllMoviesByUser(user_id: UUID):
+    try:
+        if not db_connection.is_connected():
+            db_connection.reconnect()
+        cursor = db_connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM User_film WHERE user_id = %s", (str(user_id),))
+        user_films = cursor.fetchall()
+        cursor.close()
+        return user_films
+    except mysql.connector.Error as err:
+        raise HTTPException(status_code=500, detail=f"Database error: {err}")
 
 def getAllMoviesLikedByUser(user_id: UUID):
     try:

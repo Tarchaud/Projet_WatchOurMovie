@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MovieApiService } from './movie-api.service';
 
 interface User {
   username: string;
@@ -17,7 +18,7 @@ export class AuthService {
   public currentUser: Observable<User | null>;
   private baseurl : string = 'http://localhost:8000';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient ) {
     const user = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!) : null;
     this.currentUserSubject = new BehaviorSubject<User | null>(user);
     this.currentUser = this.currentUserSubject.asObservable();
