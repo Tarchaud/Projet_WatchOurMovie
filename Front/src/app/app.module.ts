@@ -24,6 +24,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { RecommendedMoviesComponent } from './components/recommended-movies/recommended-movies.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { NotificationComponent } from './core/notification/notification.component';
+import { GroupComponent } from './pages/group/group/group.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { NotificationComponent } from './core/notification/notification.componen
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    NotificationComponent
+    NotificationComponent,
+    GroupComponent
   ],
   imports: [
     BrowserModule,
