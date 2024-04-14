@@ -5,7 +5,7 @@ from uuid import UUID, uuid4
 import mysql.connector
 import time
 
-from controllers.users_controllers import getAllUsers, createUser
+from controllers.users_controllers import getAllUsers, createUser, getUserById
 
 router = APIRouter( prefix="/users", tags=["users"])
 
@@ -33,4 +33,10 @@ def get_all_users():
 @router.post("/", response_model=User)
 def add_user(user: User):
     user = createUser(user)
+    return user
+
+# Endpoint pour récupérer un utilisateur par ID
+@router.get("/{user_id}")
+def get_user_by_id(user_id: UUID):
+    user = getUserById(user_id)
     return user

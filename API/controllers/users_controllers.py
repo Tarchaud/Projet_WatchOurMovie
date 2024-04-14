@@ -112,3 +112,21 @@ def getUserByUsername(username: str):
     except mysql.connector.Error as err:
         db_connection.disconnect()
         raise HTTPException(status_code=500, detail=f"Database error: {err}")
+    
+def getUserById(user_id: UUID):
+    db_connection = connect_to_database()
+    if db_connection is None:
+        raise HTTPException(status_code=500, detail="Failed to connect to the database.")
+    
+    try:
+        if not db_connection.is_connected():
+            db_connection.reconnect()
+        cursor = db_connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM User WHERE id = %s", (str(user_id),))
+        user = cursor.fetchone()
+        cursor.close()
+        db_connection.disconnect()
+        return user
+    except mysql.connector.Error as err:
+        db_connection.disconnect()
+        raise HTTPException(status_code=500, detail=f"Database error: {err}")
