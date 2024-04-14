@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
+import { TranslationService } from './translation.service';
 
 @Injectable({ providedIn: 'root' })
 export class MovieApiService {
   private baseurl : string = 'http://localhost:8000';
 
-  constructor( private http : HttpClient ) { }
+  constructor( private http : HttpClient, private translationService: TranslationService ) { }
 
   getMoviesByGenre(genre: number): Observable<any> {
     return this.http.get(`${this.baseurl}/movies/genre/`, {
       params: {
-        language: "fr-FR",
+        language: this.translationService.currentLanguage,
         with_genres: genre
       }
     });
@@ -20,7 +21,7 @@ export class MovieApiService {
   getMovieDetails(movieId: string): Observable<any> {
     return this.http.get(`${this.baseurl}/movies/${movieId}/details/`, {
       params: {
-        language: "fr-FR",
+        language: this.translationService.currentLanguage,
         append_to_response : "videos"
       }
     });
@@ -30,7 +31,7 @@ export class MovieApiService {
     return this.http.get(`${this.baseurl}/movies/search/`, {
       params: {
         title: query,
-        language: "fr-FR"
+        language: this.translationService.currentLanguage
       }
     });
   }
@@ -38,7 +39,7 @@ export class MovieApiService {
   getRecommendedMovies(): Observable<any> {
     return this.http.get(`${this.baseurl}/movies/trending/`, {
       params: {
-        language: "fr-FR"
+        language: this.translationService.currentLanguage
       }
     });
   }
@@ -46,7 +47,7 @@ export class MovieApiService {
   fetchBannerDetails () : Observable<any> {
     return this.http.get( this.baseurl + "/movies/trending/", {
       params: {
-        language: "fr-FR"
+        language: this.translationService.currentLanguage
       }
     });
   }
