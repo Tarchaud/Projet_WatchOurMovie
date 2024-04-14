@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { MovieApiService } from 'src/app/services/movie-api.service';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from 'src/app/pages/login/login.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,25 +9,39 @@ import { MovieApiService } from 'src/app/services/movie-api.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  userName: string = 'Dorian';
-  searchResults: any[] = [];
+  userName: string | null = null;
 
-  constructor ( private movieAPI: MovieApiService, private router: Router ) {}
-
-  onSearchKeyUp(event: any) {
-    const query = event.target.value;
-    if (query.length > 1) {
-      this.movieAPI.searchMovies(query).subscribe((response: any) => {
-        console.log(response.results)
-        this.searchResults = response.results.slice(0, 5);
-      });
-    } else {
-      this.searchResults = [];
-    }
+  constructor(public dialog: MatDialog, private authService: AuthService) {
+    this.authService.currentUser.subscribe(user => {
+      this.userName = user ? user.username : null;
+    });
   }
 
-  onSelectMovie(movieId: number) {
-    this.searchResults = [];
-    this.router.navigate(['/movie', movieId]); // Naviguez vers la page du film
+  onSearchKeyUp(event: any) {
+    console.log(event.target.value);
+  }
+
+  onSearch() {
+    console.log('Recherche effectuée');
+  }
+
+  openLoginModal() {
+    const dialogRef = this.dialog.open(LoginComponent, {
+      width: '340px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (this.authService.currentUserValue) {
+        this.userName = this.authService.currentUserValue.username;
+      } else {
+        this.userName = null;
+      }
+      console.log('The dialog was closed');
+    });
+  }
+
+  logout() {
+    this.authService.logout();
+    this.userName = null;
   }
 }
