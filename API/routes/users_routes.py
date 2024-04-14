@@ -36,7 +36,7 @@ def add_user(user: User):
     return user
 
 # Endpoint pour récupérer un utilisateur par ID
-@router.get("/{user_id}")
+@router.get("/{user_id}", response_model=UserRes)
 def get_user_by_id(user_id: UUID):
     user = getUserById(user_id)
     return user
