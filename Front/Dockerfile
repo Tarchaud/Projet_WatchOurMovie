@@ -2,10 +2,10 @@ FROM node:alpine AS build
 
 WORKDIR /usr/src/app
 
-COPY package.json ./
+COPY . .
 
 RUN npm install
 
-COPY . .
-
 EXPOSE 4200
+
+CMD [ "npm" , "start" ]
