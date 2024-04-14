@@ -51,3 +51,17 @@ docker-compose down
 ```bash
 docker-compose down --rmi all -v
 ```
+
+## Screenshots
+
+### Page d'accueil
+
+![asset/screenshots/screenshot1.png](asset/screenshots/screenshot1.png)
+
+### Informations sur un film
+
+![asset/screenshots/screenshot2.png](asset/screenshots/screenshot2.png)
+
+### Système de recherche interactif
+
+![asset/screenshots/screenshot3.png](asset/screenshots/screenshot3.png)
