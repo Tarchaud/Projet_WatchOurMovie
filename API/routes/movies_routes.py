@@ -82,7 +82,7 @@ async def get_trending_movies(language: Optional[str] = "fr-FR", time_window: Op
 
 
 @router.get("/genre/movie")
-async def get_list_genre_movies(language: Optional[str] = "fr-FR"):
+async def get_list_genre_of_movies(language: Optional[str] = "fr-FR"):
     """
     Obtenir une liste des genres de film.
     Renvoie la liste des genre de film.
@@ -121,12 +121,10 @@ async def get_movies_by_genre(language: Optional[str] = "fr-FR", with_genres: st
         "page": page,
         "sort_by" : "popularity.desc"
     }
-    print(params)
     
     try:
         # Récupérer les films par genre depuis le cache
         cache_key = ("Movie_Genre", with_genres, language, page)
-        print(cache_key)
         response = fetch_TMDB_movie_genre(params, cache_key)
         return response
     except requests.exceptions.RequestException as e:
