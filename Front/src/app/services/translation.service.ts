@@ -27,7 +27,9 @@ export class TranslationService {
       'Une adresse email valide est requise': 'A valid email is required',
       'Un mot de passe est requis': 'Password is required',
       'Erreur lors de l\'inscription. Vérifiez les champs.': 'Error during registration. Check the fields.',
-      'Format d\'email invalide': 'Invalid email format'
+      'Format d\'email invalide': 'Invalid email format',
+      'Films Aimés': 'Liked Movies',
+      'Films Vus': 'Watched Movies',
     },
     fr: {
       'Identifiant': 'Identifiant',
@@ -43,7 +45,9 @@ export class TranslationService {
       'Une adresse email valide est requise': 'Une adresse email valide est requise',
       'Un mot de passe est requis': 'Un mot de passe est requis',
       'Erreur lors de l\'inscription. Vérifiez les champs.': 'Erreur lors de l\'inscription. Vérifiez les champs.',
-      'Format d\'email invalide': 'Format d\'email invalide'
+      'Format d\'email invalide': 'Format d\'email invalide',
+      'Films Aimés': 'Films Aimés',
+      'Films Vus': 'Films Vus',
     }
   };
 

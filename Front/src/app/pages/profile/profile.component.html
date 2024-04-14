@@ -1,2 +1,2 @@
-<app-index categoryName="Films Aimés" [films]="filmSectionsLike"></app-index>
-<app-index categoryName="Films Vus" [films]="filmSectionsWatch"></app-index>
+<app-index [categoryName]="this.translationService.translate('Films Aimés')" [films]="filmSectionsLike"></app-index>
+<app-index [categoryName]="this.translationService.translate('Films Vus')" [films]="filmSectionsWatch"></app-index>

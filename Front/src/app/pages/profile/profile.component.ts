@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { map, forkJoin } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { MovieApiService } from 'src/app/services/movie-api.service';
+import { TranslationService } from 'src/app/services/translation.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,7 @@ export class ProfileComponent {
   filmSectionsLike: any = [];
   filmSectionsWatch: any = [];
 
-  constructor(private movieApiService: MovieApiService, private router: Router, private authService: AuthService) { }
+  constructor(private movieApiService: MovieApiService, private router: Router, private authService: AuthService, public translationService: TranslationService) { }
 
   ngOnInit(): void {
     const userId = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!).id : null;

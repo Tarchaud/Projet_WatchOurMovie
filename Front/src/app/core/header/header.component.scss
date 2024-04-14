@@ -36,6 +36,7 @@
   justify-content: center; // Centrer le contenu
   flex-grow: 1; // Prend tout l'espace disponible
   position: relative;
+  z-index: 2;
   max-width: 500px; // Limiter la taille maximale de la barre de recherche
   margin: 0 20px; // Ajouter un peu d'espace autour
 
@@ -77,43 +78,43 @@
   margin-left: 10px;
 }
   
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-info .user-icon {
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.user-info span {
+  cursor: pointer;
+  &:hover {
+    color: #bbbbbb;
   }
-  
-  .user-info .user-icon {
-    cursor: pointer;
-    font-size: 1.5rem;
+}
+
+.user-info button {
+  padding: 5px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #e50914;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    background-color: #f62217;
   }
+}
   
-  .user-info span {
-    cursor: pointer;
-    &:hover {
-      color: #bbbbbb;
-    }
-  }
-  
-  .user-info button {
-    padding: 5px 15px;
-    border: none;
-    border-radius: 4px;
-    background-color: #e50914;
-    color: #ffffff;
-    font-weight: bold;
-    cursor: pointer;
-    &:hover {
-      background-color: #f62217;
-    }
-  }
-  
-  .search-results {
-    position: absolute;
-    width: 100%;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background: black;
-    top: 100%;
+.search-results {
+  position: absolute;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background: black;
+  top: 100%;
 }
 
 .search-results ul {
@@ -134,7 +135,7 @@
 
 .header .logo {
   display: flex;
-  align-items: center; /* Cela aligne verticalement le texte et le bouton */
+  align-items: center;
 }
 
 .logo a,
@@ -149,11 +150,11 @@
   border: none;
   cursor: pointer;
   margin-left: 10px;
-  line-height: 0; /* Élimine l'espace supplémentaire autour de l'image du bouton */
+  line-height: 0;
 }
 
 .flag-button img {
-  display: block; /* Empêche l'espace sous l'image comme s'il s'agissait d'une ligne de texte */
-  width: 30px; /* Taille ajustée pour le bouton */
+  display: block;
+  width: 30px;
   height: auto;
 }
