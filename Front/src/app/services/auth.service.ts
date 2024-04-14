@@ -68,12 +68,20 @@ export class AuthService {
     });
   }
 
-  toggleLike(userId: string, movieId: number, like: boolean) {
+  getAllUserMovies(userId: string) {
+    const url = `${this.baseurl}/user_films/${userId}/films/`;
+    return this.http.get<any>(url, {
+      headers: { Authorization: `Bearer ` + localStorage.getItem('token') }
+    });
+  }
+
+  toggleLike(userId: string, movieId: number, like: boolean, seen: boolean) {
     const url = `${this.baseurl}/user_films/${userId}/films/`;
     const filmData = {
       user_id: userId,
       film_tmdb_id: movieId,
-      liked: like
+      liked: like,
+      seen: seen
     };
 
     console.log(filmData);
@@ -83,12 +91,13 @@ export class AuthService {
     });
   }
 
-  toggleSeen(userId: string, movieId: number, seen: boolean) {
+  toggleSeen(userId: string, movieId: number, seen: boolean, liked: boolean) {
     const url = `${this.baseurl}/user_films/${userId}/films/`;
     const filmData = {
       user_id: userId,
       film_tmdb_id: movieId,
-      seen: seen
+      seen: seen,
+      liked: liked
     };
     
     return this.http.post<any>(url, filmData, {

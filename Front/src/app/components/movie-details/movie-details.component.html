@@ -11,8 +11,12 @@
             <p>{{ film.overview }}</p>
         </div>
         <div class="movie-actions">
-            <button (click)="toggleLike(film.id)">❤️ J'aime {{ film.likes }}</button>
-            <button (click)="toggleSeen(film.id)">👁️ Vu</button>
+            <button (click)="toggleLike(film.id)">
+                {{ hasLiked ? "❤️ J'aime déjà" : "🤍 J'aime"}}
+            </button>
+            <button (click)="toggleSeen(film.id)">
+                {{ hasSeen ? "👁‍🗨 Déjà vu" : "👁️ Voir"}}
+            </button>
         </div>
         <div class="movie-additional-info">
             <div class="movie-categories">

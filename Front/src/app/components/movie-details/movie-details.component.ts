@@ -16,7 +16,9 @@ export class MovieDetailsComponent {
   film: any;
   id!: string;
   trailer_url ?: SafeResourceUrl;
-  url_created = false
+  url_created = false;
+  hasLiked = false;
+  hasSeen = false;
 
   constructor(private movieAPI: MovieApiService, private authService: AuthService, private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer, private notificationService: NotificationService) {
     this.id = "";
@@ -32,6 +34,15 @@ export class MovieDetailsComponent {
           this.url_created = true
         }
       });
+      const userId = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!).id : null;
+      if(userId !== null) {
+        this.authService.getAllUserMovies(userId).subscribe(result => {
+          console.log(result);
+          let movie = result.filter((mv: any) => mv.film_tmdb_id === parseInt(this.id));
+          this.hasLiked = movie.length > 0 && movie[0].liked;
+          this.hasSeen = movie.length > 0 && movie[0].seen;
+        });
+      }
     });
   }
 
@@ -42,8 +53,10 @@ export class MovieDetailsComponent {
     }
     this.authService.getLikedMovies(userId).subscribe(result => {
       console.log(result.filter((mv: any) => mv.film_tmdb_id === movieId).length);
-      this.authService.toggleLike(userId, movieId, result.filter((mv: any) => mv.film_tmdb_id === movieId).length === 0).subscribe(result => {
+      this.authService.toggleLike(userId, movieId, result.filter((mv: any) => mv.film_tmdb_id === movieId).length === 0, this.hasSeen).subscribe(result => {
         this.notificationService.showNotification('Film marqué comme ' + (result.liked ? "" : "non") + ' favori !');
+        this.hasSeen = result.seen;
+        this.hasLiked = result.liked;
       });
     });
   }
@@ -54,8 +67,10 @@ export class MovieDetailsComponent {
       return;
     }
     this.authService.getWatchedMovies(userId).subscribe(result => {
-      this.authService.toggleSeen(userId, movieId, result.filter((mv: any) => mv.film_tmdb_id === movieId).length === 0).subscribe(result => {
+      this.authService.toggleSeen(userId, movieId, result.filter((mv: any) => mv.film_tmdb_id === movieId).length === 0, this.hasLiked).subscribe(result => {
         this.notificationService.showNotification('Film marqué comme ' + (result.seen ? "" : "non") + ' vu !');
+        this.hasSeen = result.seen;
+        this.hasLiked = result.liked;
       });
     });
   }

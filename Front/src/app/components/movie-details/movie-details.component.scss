@@ -103,3 +103,18 @@
     background-color: green;
     color: white;
 }
+
+.liked, .seen {
+    background-color: #e50914;
+    color: white;
+  }
+  
+  .seen {
+    background-color: green;
+  }
+  
+  .movie-actions button:hover {
+    background-color: #f62217;
+    color: white;
+  }
+  
