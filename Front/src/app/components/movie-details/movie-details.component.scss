@@ -1,0 +1,82 @@
+/* movie-detail.component.css */
+.movie-detail-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 40px auto;
+    background-color: #343a40;
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+}
+
+.movie-image-container {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.movie-image {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.movie-info-container {
+    flex: 2;
+    padding-left: 20px;
+}
+
+.movie-title {
+    margin-top: 0;
+}
+
+.movie-tagline {
+    font-style: italic;
+    color: #bbbbbb;
+}
+
+.movie-overview h3 {
+    margin-top: 20px;
+}
+
+.movie-additional-info {
+    margin-top: 20px;
+}
+
+.play-trailer-button {
+    background-color: #e50914;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.play-trailer-button:hover {
+    background-color: #f62217;
+}
+
+.movie-categories h4 {
+    display: inline;
+    margin-right: 10px;
+}
+
+.categories-list {
+    list-style: none;
+    padding: 0;
+    display: inline;
+}
+
+.categories-list li {
+    display: inline;
+    margin-right: 5px;
+}
+
+.recommended-movies {
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.recommended-movies h3 {
+    margin-bottom: 10px;
+}

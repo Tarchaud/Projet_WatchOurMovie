@@ -1,0 +1,95 @@
+/* film-gallery.component.css */
+.film-gallery {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #222;
+    color: #fff;
+}
+
+.gallery-title {
+    text-align: left;
+    color: #E50914;
+    margin-left: 15px;
+    margin-bottom: 20px;
+}
+
+.carousel {
+    position: relative;
+    margin: auto;
+}
+
+.carousel-track-container {
+    overflow: hidden;
+}
+
+.carousel-track {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+    display: flex;
+    min-width: 100%;
+    justify-content: center;
+}
+
+.film {
+    position: relative;
+    box-sizing: border-box;
+    margin: 5px;
+    width: calc(25% - 10px);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.film:hover {
+    transform: scale(1.05);
+}
+
+.film-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.film-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 10;
+}
+
+.carousel-button-left {
+    left: 10px;
+}
+
+.carousel-button-right {
+    right: 10px;
+}
+
+.carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
