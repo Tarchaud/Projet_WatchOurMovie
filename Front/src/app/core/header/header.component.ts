@@ -63,4 +63,8 @@ export class HeaderComponent {
   onFlagClick() {
     localStorage.setItem('language', localStorage.getItem('language') === 'en' ? 'fr' : 'en');
   }
+
+  goToProfile() {
+    this.router.navigate(['/profile']);
+  }
 }

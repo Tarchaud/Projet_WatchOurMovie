@@ -17,7 +17,7 @@
     </div>
     <div class="user-info">
         <ng-container *ngIf="userName; else showLogin">
-            <span>{{ userName }}</span>
+            <span (click)="goToProfile()">{{ userName }}</span>
             <button (click)="logout()">Déconnexion</button>
         </ng-container>
         <ng-template #showLogin>

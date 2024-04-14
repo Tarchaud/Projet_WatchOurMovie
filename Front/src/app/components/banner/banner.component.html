@@ -2,7 +2,7 @@
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item" data-bs-interval="5000" *ngFor="let banner of bannerList; first as isFirst"
-                [ngClass]="{ active : isFirst }">
+                [ngClass]="{ active : isFirst }" (click)="openFilmDetails(banner)">
                 <img src="https://image.tmdb.org/t/p/original/{{ banner.backdrop_path }}" class="d-block w-100"
                     alt="...">
                 <div class="carousel-caption d-none d-md-block">

@@ -50,4 +50,20 @@ export class MovieApiService {
       }
     });
   }
+
+  getLikedMovies(userId: string): Observable<any> {
+    return this.http.get(`${this.baseurl}/${userId}/liked_films/`, {
+      params: {
+        language: "fr-FR"
+      }
+    });
+  }
+
+  getWatchedMovies(userId: string): Observable<any> {
+    return this.http.get(`${this.baseurl}/${userId}/seen_films/`, {
+      params: {
+        language: "fr-FR"
+      }
+    });
+  }
 }
