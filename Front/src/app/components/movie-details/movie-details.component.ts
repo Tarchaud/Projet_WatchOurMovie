@@ -20,6 +20,8 @@ export class MovieDetailsComponent {
     this.id = "";
     this.route.params.subscribe(async params => {
       this.id = params['id'];
+      this.url_created = false;
+      this.trailer_url = "";
       this.movieAPI.getMovieDetails(this.id).subscribe(result => {
         this.film = result;
         const trailer = result.videos.results.find((video :any) => video.type === 'Trailer' && video.site === 'YouTube');
