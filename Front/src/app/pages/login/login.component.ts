@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth.service';
 import { RegisterComponent } from '../register/register.component';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent {
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private authService: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private translationService: TranslationService
   ) { }
 
   onLogin() {
@@ -27,14 +29,17 @@ export class LoginComponent {
       },
       error: (error) => {
         this.loginError = true;
-        console.error('Erreur lors de la connexion', error);
+        console.error('Error during login', error);
       }
     });
   }
 
   openRegister() {
     this.dialogRef.close();
-    this.dialog.open(RegisterComponent, {
-    });
+    this.dialog.open(RegisterComponent, {});
+  }
+
+  translate(key: string): string {
+    return this.translationService.translate(key);
   }
 }

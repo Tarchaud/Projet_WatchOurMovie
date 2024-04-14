@@ -32,11 +32,20 @@
 
 
 .search-container {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: #333;
-  padding: 10px 20px;
+  display: flex;
+  justify-content: center; // Centrer le contenu
+  flex-grow: 1; // Prend tout l'espace disponible
+  position: relative;
+  max-width: 500px; // Limiter la taille maximale de la barre de recherche
+  margin: 0 20px; // Ajouter un peu d'espace autour
+
+  input[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    width: 100%; // Utiliser toute la largeur disponible
+  }
 }
 
 .search-container input[type="text"],

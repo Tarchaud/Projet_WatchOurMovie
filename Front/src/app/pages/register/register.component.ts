@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth.service';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,8 @@ export class RegisterComponent {
 
   constructor(
     public dialogRef: MatDialogRef<RegisterComponent>,
-    private authService: AuthService
+    private authService: AuthService,
+    private translationService: TranslationService
   ) { }
 
   onRegister() {
@@ -31,8 +33,12 @@ export class RegisterComponent {
       },
       error: (error) => {
         this.registerError = true;
-        console.error("Erreur lors de l'inscription", error);
+        console.error("Error during registration", error);
       }
     });
+  }
+
+  translate(key: string): string {
+    return this.translationService.translate(key);
   }
 }

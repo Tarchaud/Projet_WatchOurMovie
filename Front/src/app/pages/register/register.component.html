@@ -1,23 +1,23 @@
 <div class="register-modal">
   <form (ngSubmit)="onRegister()" #registerForm="ngForm">
-    <input type="text" [(ngModel)]="username" name="username" placeholder="Nom d'utilisateur" required #usernameRegInput="ngModel">
+    <input type="text" [(ngModel)]="username" name="username" [placeholder]="translate('Nom d\'utilisateur')" required #usernameRegInput="ngModel">
     <div *ngIf="usernameRegInput.invalid && usernameRegInput.touched" class="error-message">
-      Un nom d'utilisateur est requis.
+      {{ translate('Un nom d\'utilisateur est requis') }}
     </div>
-    <input type="email" [(ngModel)]="email" name="email" placeholder="E-mail" required email #emailInput="ngModel">
+    <input type="email" [(ngModel)]="email" name="email" [placeholder]="translate('E-mail')" required email #emailInput="ngModel">
     <div *ngIf="emailInput.invalid && emailInput.touched" class="error-message">
-      Une adresse email valide est requise.
+      {{ translate('Une adresse email valide est requise') }}
     </div>
-    <input type="password" [(ngModel)]="password" name="password" placeholder="Mot de passe" required #passwordRegInput="ngModel">
+    <input type="password" [(ngModel)]="password" name="password" [placeholder]="translate('Mot de passe')" required #passwordRegInput="ngModel">
     <div *ngIf="passwordRegInput.invalid && passwordRegInput.touched" class="error-message">
-      Un mot de passe est requis.
+      {{ translate('Un mot de passe est requis') }}
     </div>
-    <button type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
+    <button type="submit" [disabled]="registerForm.invalid">{{ translate('S\'inscrire') }}</button>
     <div *ngIf="registerError" class="error-message2">
-      Erreur lors de l'inscription. Vérifiez les champs.
+      {{ translate('Erreur lors de l\'inscription. Vérifiez les champs.') }}
     </div>
     <div *ngIf="emailError" class="error-message">
-      Format d'email invalide.
+      {{ translate('Format d\'email invalide') }}
     </div>
   </form>
 </div>

@@ -2,11 +2,13 @@
     <div class="logo">
         <a href="/">WatchOurMovie</a>
         <button class="flag-button" (click)="onFlagClick()">
-            <img [src]="'./assets/img/' + getCurrentLanguage() + '_flag.png'" alt="Drapeau Français" class="french-flag" />
+            <!-- Utilise getCurrentLanguage pour afficher le drapeau de la langue actuelle -->
+            <img [src]="'./assets/img/' + getCurrentLanguage() + '_flag.png'" 
+                 [alt]="getCurrentLanguage() === 'en' ? 'English Flag' : 'French Flag'" />
         </button>
     </div>
     <div class="search-container">
-        <input type="text" placeholder="Recherche..." (keyup)="onSearchKeyUp($event)">
+        <input type="text" [placeholder]="getCurrentLanguage() === 'fr' ? 'Recherche...' : 'Search...'" (keyup)="onSearchKeyUp($event)">
         <div class="search-results" *ngIf="searchResults.length > 0">
             <ul>
                 <li *ngFor="let movie of searchResults" (click)="onSelectMovie(movie.id)">
@@ -18,10 +20,10 @@
     <div class="user-info">
         <ng-container *ngIf="userName; else showLogin">
             <span (click)="goToProfile()">{{ userName }}</span>
-            <button (click)="logout()">Déconnexion</button>
+            <button (click)="logout()">{{ getCurrentLanguage() === 'fr' ? 'Déconnexion' : 'Logout' }}</button>
         </ng-container>
         <ng-template #showLogin>
-            <span (click)="openLoginModal()">Se connecter</span>
+            <span (click)="openLoginModal()">{{ getCurrentLanguage() === 'fr' ? 'Se connecter' : 'Login' }}</span>
             <i class="user-icon" (click)="openLoginModal()">👤</i>
         </ng-template>
     </div>

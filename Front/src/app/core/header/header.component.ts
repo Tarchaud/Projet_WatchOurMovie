@@ -14,7 +14,12 @@ export class HeaderComponent {
   userName: string | null = null;
   searchResults: any[] = [];
 
-  constructor(public dialog: MatDialog, private authService: AuthService, private movieAPI: MovieApiService, private router: Router) {
+  constructor(
+    public dialog: MatDialog,
+    private authService: AuthService,
+    private movieAPI: MovieApiService,
+    private router: Router
+  ) {
     this.authService.currentUser.subscribe(user => {
       this.userName = user ? user.username : null;
     });
@@ -24,7 +29,6 @@ export class HeaderComponent {
     const query = event.target.value;
     if (query.length > 1) {
       this.movieAPI.searchMovies(query).subscribe((response: any) => {
-        console.log(response.results)
         this.searchResults = response.results.slice(0, 5);
       });
     } else {
@@ -34,20 +38,17 @@ export class HeaderComponent {
 
   onSelectMovie(movieId: number) {
     this.searchResults = [];
-    this.router.navigate(['/movie', movieId]); // Naviguez vers la page du film
+    this.router.navigate(['/movie', movieId]);
   }
 
   openLoginModal() {
-    const dialogRef = this.dialog.open(LoginComponent, {
-    });
-
+    const dialogRef = this.dialog.open(LoginComponent, {});
     dialogRef.afterClosed().subscribe(result => {
       if (this.authService.currentUserValue) {
         this.userName = this.authService.currentUserValue.username;
       } else {
         this.userName = null;
       }
-      console.log('The dialog was closed');
     });
   }
 
@@ -56,12 +57,14 @@ export class HeaderComponent {
     this.userName = null;
   }
 
-  getCurrentLanguage() {
-    return localStorage.getItem('language');
+  getCurrentLanguage(): string {
+    return localStorage.getItem('language') || 'en';
   }
 
-  onFlagClick() {
-    localStorage.setItem('language', localStorage.getItem('language') === 'en' ? 'fr' : 'en');
+  onFlagClick(): void {
+    const newLang = this.getCurrentLanguage() === 'en' ? 'fr' : 'en';
+    localStorage.setItem('language', newLang);
+    window.location.reload(); 
   }
 
   goToProfile() {
