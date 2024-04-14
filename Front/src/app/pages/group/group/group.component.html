@@ -3,7 +3,7 @@
       <h2 (click)="toggleGroup(group.id)">{{ group.name }}</h2>
       <div *ngIf="group.id === expandedGroupId">
         <ul>
-          <li *ngFor="let userId of group.user_ids">{{ userNames[userId] || 'Loading...' }}</li>
+          <li *ngFor="let userId of group.user_ids">{{ userId }}</li>
         </ul>
         <div class="user-management">
           <input type="text" placeholder="Add User ID" #newUserId>
