@@ -55,18 +55,18 @@
   }
   
   .login-footer {
-    margin-top: 15px; // Ajoute un espace au-dessus du footer
-    font-size: 14px; // Ajuste la taille de police si nécessaire
-    color: #999; // Couleur plus douce pour le texte
+    margin-top: 15px;
+    font-size: 14px;
+    color: #999;
 
     a {
-      color: #007bff; // Couleur bleue pour le lien, change selon ton thème
+      color: #007bff;
       cursor: pointer;
-      text-decoration: none; // Supprime le soulignement par défaut
+      text-decoration: none;
 
       &:hover {
-        text-decoration: underline; // Souligne au survol pour indiquer la cliquabilité
-        color: #0056b3; // Assombrit la couleur au survol
+        text-decoration: underline;
+        color: #0056b3;
       }
     }
   }

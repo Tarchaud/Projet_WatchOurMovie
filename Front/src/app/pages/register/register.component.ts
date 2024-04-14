@@ -20,12 +20,10 @@ export class RegisterComponent {
   onRegister() {
     this.authService.register(this.username, this.email, this.password).subscribe({
       next: (response) => {
-        this.dialogRef.close(); // Fermer le modal après une inscription réussie
-        // Connecter directement l'utilisateur ici si souhaité
+        this.dialogRef.close();
       },
       error: (error) => {
         console.error("Erreur lors de l'inscription", error);
-        // Affiche une erreur à l'utilisateur ici
       }
     });
   }

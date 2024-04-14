@@ -1,4 +1,3 @@
-<!-- header.component.html -->
 <div class="header">
     <div class="logo">
         <a href="/">WatchOurMovie</a>
@@ -10,7 +9,13 @@
         </button>
     </div>
     <div class="user-info">
-        <span>{{ userName }}</span>
-        <i class="user-icon" (click)="openLoginModal()">👤</i>
+        <ng-container *ngIf="userName; else showLogin">
+            <span>{{ userName }}</span>
+            <button (click)="logout()">Déconnexion</button>
+        </ng-container>
+        <ng-template #showLogin>
+            <span (click)="openLoginModal()">Se connecter</span>
+            <i class="user-icon" (click)="openLoginModal()">👤</i>
+        </ng-template>
     </div>
 </div>

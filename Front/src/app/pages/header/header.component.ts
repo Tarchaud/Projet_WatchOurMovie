@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +9,13 @@ import { LoginComponent } from '../login/login.component';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  userName: string = 'Dorian';
+  userName: string | null = null;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private authService: AuthService) {
+    this.authService.currentUser.subscribe(user => {
+      this.userName = user ? user.username : null;
+    });
+  }
 
   onSearchKeyUp(event: any) {
     console.log(event.target.value);
@@ -26,7 +31,17 @@ export class HeaderComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if (this.authService.currentUserValue) {
+        this.userName = this.authService.currentUserValue.username;
+      } else {
+        this.userName = null;
+      }
       console.log('The dialog was closed');
     });
+  }
+
+  logout() {
+    this.authService.logout();
+    this.userName = null;
   }
 }
