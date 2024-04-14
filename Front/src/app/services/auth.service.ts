@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   register(username: string, email: string, password: string) {
-    return this.http.post<any>(`/auth/signup`, { username, email, password })
+    return this.http.post<any>(`http://localhost:8000/auth/signup`, { username, email, password })
       .pipe(map(response => {
         localStorage.setItem('currentUser', JSON.stringify(response.user));
         localStorage.setItem('token', response.access_token);
